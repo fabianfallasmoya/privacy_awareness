@@ -67,7 +67,8 @@ class YOLODataset(BaseDataset):
                             im_file=im_file,
                             shape=shape,
                             cls=lb[:, 0:1],  # n, 1
-                            bboxes=lb[:, 1:],  # n, 4
+                            bboxes=lb[:, 1:5],  # n, 4
+                            pa=lb[:, 5:], # n, 1
                             segments=segments,
                             keypoints=keypoint,
                             normalized=True,

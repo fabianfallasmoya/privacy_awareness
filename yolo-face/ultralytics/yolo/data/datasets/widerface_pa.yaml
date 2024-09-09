@@ -1,0 +1,14 @@
+path: ../datasets/customPA/WIDERFACE_PA_yolov8
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['face']
+
+roboflow:
+  workspace: objectdetection-iyfmq
+  project: widerface-pa
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/objectdetection-iyfmq/widerface-pa/dataset/1
