@@ -30,11 +30,11 @@ class DetectionValidator(BaseValidator):
     def preprocess(self, batch):
         batch["img"] = batch["img"].to(self.device, non_blocking=True)
         batch["img"] = (batch["img"].half() if self.args.half else batch["img"].float()) / 255
-        for k in ["batch_idx", "cls", "bboxes"]:
+        for k in ["batch_idx", "cls", "bboxes", "pa"]:
             batch[k] = batch[k].to(self.device)
 
         nb = len(batch["img"])
-        self.lb = [torch.cat([batch["cls"], batch["bboxes"]], dim=-1)[batch["batch_idx"] == i]
+        self.lb = [torch.cat([batch["cls"], batch["bboxes"], batch["pa"]], dim=-1)[batch["batch_idx"] == i]
                    for i in range(nb)] if self.args.save_hybrid else []  # for autolabelling
 
         return batch
@@ -73,6 +73,7 @@ class DetectionValidator(BaseValidator):
             idx = batch["batch_idx"] == si
             cls = batch["cls"][idx]
             bbox = batch["bboxes"][idx]
+            pa = batch["pa"][idx]
             nl, npr = cls.shape[0], pred.shape[0]  # number of labels, predictions
             shape = batch["ori_shape"][si]
             correct_bboxes = torch.zeros(npr, self.niou, dtype=torch.bool, device=self.device)  # init
@@ -99,12 +100,14 @@ class DetectionValidator(BaseValidator):
                     (width, height, width, height), device=self.device)  # target boxes
                 ops.scale_boxes(batch["img"][si].shape[1:], tbox, shape,
                                 ratio_pad=batch["ratio_pad"][si])  # native-space labels
-                labelsn = torch.cat((cls, tbox), 1)  # native-space labels
+                labelsn = torch.cat((cls, tbox, pa), 1)  # native-space labels
                 correct_bboxes = self._process_batch(predn, labelsn)
+                correct_bboxes_pa = self._process_batch_pa(predn, labelsn)
                 # TODO: maybe remove these `self.` arguments as they already are member variable
                 if self.args.plots:
                     self.confusion_matrix.process_batch(predn, labelsn)
-            self.stats.append((correct_bboxes, pred[:, 4], pred[:, 5], cls.squeeze(-1)))  # (conf, pcls, tcls)
+            # NOTE Change correct_bboxes for correct_bboxes_pa
+            self.stats.append((correct_bboxes_pa, pred[:, 4], pred[:, 5], cls.squeeze(-1)))  # (conf, pcls, tcls)
 
             # Save
             if self.args.save_json:
@@ -143,7 +146,7 @@ class DetectionValidator(BaseValidator):
         Returns:
             correct (array[N, 10]), for 10 IoU levels
         """
-        iou = box_iou(labels[:, 1:], detections[:, :4])
+        iou = box_iou(labels[:, 1:5], detections[:, :4])
         correct = np.zeros((detections.shape[0], self.iouv.shape[0])).astype(bool)
         correct_class = labels[:, 0:1] == detections[:, 5]
         for i in range(len(self.iouv)):
@@ -158,6 +161,73 @@ class DetectionValidator(BaseValidator):
                     matches = matches[np.unique(matches[:, 0], return_index=True)[1]]
                 correct[matches[:, 1].astype(int), i] = True
         return torch.tensor(correct, dtype=torch.bool, device=detections.device)
+
+    def calculate_bbox_size(self, detections):
+        # Calculate the width and height of each box
+        width = torch.abs(detections[:, 2] - detections[:, 0])  # |x2 - x1|
+        height = torch.abs(detections[:, 3] - detections[:, 1])  # |y2 - y1|
+        # Calculate the normlized area for 640x640 pixels images
+        area = width * height / 409600
+        # Add the area as an extra column
+        array_with_area = torch.cat((detections, area.unsqueeze(1)), dim=1)
+        return array_with_area
+
+    def calculate_pa(self, detections):
+        # Calculate the PA using the weights formula
+        pa = 0.5 * detections[:, 4] + 0.5 * detections[:, 6]
+        # Add the Privacy Awareness as an extra column
+        array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
+
+        # now classify continuous PA value into PA interval i.e. 0.73 -> 0.8
+        pa_intervals = torch.ceil(pa / 0.2) * 0.2
+
+        array_with_pa = torch.cat((array_with_pa, pa_intervals.unsqueeze(1)), dim=1)
+
+        return array_with_pa
+
+    def normalize_pa_labels(self, labels):
+        # Transform PA range from [1,5] to [0,1]
+        labels[:, 5] = labels[:, 5] / 5
+        return labels
+
+    def _process_batch_pa(self, detections, labels):
+        """
+        Return correct prediction matrix for Privacy Awareness
+        Arguments:
+            detections (array[N, 6]), x1, y1, x2, y2, conf, class
+            labels (array[M, 6]), class, x1, y1, x2, y2, PA
+        Returns:
+            correct_pa (array[N, 10]), for 10 IoU levels
+        """
+        iou = box_iou(labels[:, 1:5], detections[:, :4])
+        correct = np.zeros((detections.shape[0], self.iouv.shape[0])).astype(bool)
+        correct_class = labels[:, 0:1] == detections[:, 5]
+
+        # predict the privacy awareness
+        # first calculate the bbox size
+        detections_pa = self.calculate_bbox_size(detections)
+
+        # now calculate the PA by combining the confidence score and bbox size, x1, y1, x2, y2, conf, class, area, PA (continuous), PA (intervals)
+        detections_pa = self.calculate_pa(detections_pa)
+
+        # normalize the PA labels since their range is [1,5] but we want them in [0,1] 0.2, 0.4, 0.6, 0.8, 1
+        labels_pa = self.normalize_pa_labels(labels)
+
+        correct_pa = labels_pa[:, 5:6] == detections_pa[:, 8]
+
+        for i in range(len(self.iouv)):
+            x = torch.where((iou >= self.iouv[i]) & correct_class & correct_pa)  # IoU > threshold and classes match and correct pa
+            if x[0].shape[0]:
+                matches = torch.cat((torch.stack(x, 1), iou[x[0], x[1]][:, None]),
+                                    1).cpu().numpy()  # [label, detect, iou]
+                if x[0].shape[0] > 1:
+                    matches = matches[matches[:, 2].argsort()[::-1]]
+                    matches = matches[np.unique(matches[:, 1], return_index=True)[1]]
+                    # matches = matches[matches[:, 2].argsort()[::-1]]
+                    matches = matches[np.unique(matches[:, 0], return_index=True)[1]]
+                correct[matches[:, 1].astype(int), i] = True
+        return torch.tensor(correct, dtype=torch.bool, device=detections.device)
+
 
     def get_dataloader(self, dataset_path, batch_size):
         # TODO: manage splits differently

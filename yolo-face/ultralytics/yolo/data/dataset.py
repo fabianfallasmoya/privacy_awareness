@@ -119,6 +119,7 @@ class YOLODataset(BaseDataset):
         labels = cache["labels"]
         nl = len(np.concatenate([label["cls"] for label in labels], 0))  # number of labels
         assert nl > 0, f"{self.prefix}All labels empty in {cache_path}, can not start training. {HELP_URL}"
+        print("Get PA labels from cache: ", len(np.concatenate([label["pa"] for label in labels], 0)))
         return labels
 
     # TODO: use hyp config to set all these augmentations
@@ -149,12 +150,13 @@ class YOLODataset(BaseDataset):
         """custom your label format here"""
         # NOTE: cls is not with bboxes now, classification and semantic segmentation need an independent cls label
         # we can make it also support classification and semantic segmentation by add or remove some dict keys there.
+        pa = label.pop("pa")
         bboxes = label.pop("bboxes")
         segments = label.pop("segments")
         keypoints = label.pop("keypoints", None)
         bbox_format = label.pop("bbox_format")
         normalized = label.pop("normalized")
-        label["instances"] = Instances(bboxes, segments, keypoints, bbox_format=bbox_format, normalized=normalized)
+        label["instances"] = Instances(bboxes, pa, segments, keypoints, bbox_format=bbox_format, normalized=normalized)
         return label
 
     @staticmethod
@@ -168,7 +170,7 @@ class YOLODataset(BaseDataset):
             value = values[i]
             if k == "img":
                 value = torch.stack(value, 0)
-            if k in ["masks", "keypoints", "bboxes", "cls"]:
+            if k in ["masks", "keypoints", "bboxes", "cls", "pa"]:
                 value = torch.cat(value, 0)
             new_batch[k] = value
         new_batch["batch_idx"] = list(new_batch["batch_idx"])

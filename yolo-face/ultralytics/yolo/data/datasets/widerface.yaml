@@ -1,0 +1,14 @@
+path: ../datasets/WIDER_val_yolov8  # dataset root dir
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['face']
+
+roboflow:
+  workspace: objectdetection-iyfmq
+  project: face-detection-zsyuq
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/objectdetection-iyfmq/face-detection-zsyuq/dataset/1

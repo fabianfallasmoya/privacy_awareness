@@ -893,7 +893,7 @@ class LoadImagesAndLabels(Dataset):
         im, label, path, shapes = zip(*batch)  # transposed
         for i, lb in enumerate(label):
             lb[:, 0] = i  # add target image index for build_targets()
-        batch_idx, cls, bboxes = torch.cat(label, 0).split((1, 1, 4), dim=1)
+        batch_idx, cls, bboxes, pa = torch.cat(label, 0).split((1, 1, 4, 1), dim=1)
         return {
             'ori_shape': tuple((x[0] if x else None) for x in shapes),
             'ratio_pad': tuple((x[1] if x else None) for x in shapes),
@@ -901,7 +901,8 @@ class LoadImagesAndLabels(Dataset):
             'img': torch.stack(im, 0),
             'cls': cls,
             'bboxes': bboxes,
-            'batch_idx': batch_idx.view(-1)}
+            'batch_idx': batch_idx.view(-1),
+            'pa': pa}
 
     @staticmethod
     def collate_fn_old(batch):

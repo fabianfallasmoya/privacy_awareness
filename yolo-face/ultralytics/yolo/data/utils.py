@@ -86,8 +86,9 @@ def verify_image_label(args):
                 lb = [x.split() for x in f.read().strip().splitlines() if len(x)]
                 if any(len(x) > 6 for x in lb) and (not keypoint):  # is segment
                     classes = np.array([x[0] for x in lb], dtype=np.float32)
-                    segments = [np.array(x[1:], dtype=np.float32).reshape(-1, 2) for x in lb]  # (cls, xy1...)
-                    lb = np.concatenate((classes.reshape(-1, 1), segments2boxes(segments)), 1)  # (cls, xywh)
+                    segments = [np.array(x[1:5], dtype=np.float32).reshape(-1, 2) for x in lb]  # (cls, xy1...)
+                    pa = np.array([x[5:] for x in lb], dtype=np.float32)
+                    lb = np.concatenate((classes.reshape(-1, 1), segments2boxes(segments), pa.reshape(-1, 1)), 1)  # (cls, xywh)
                 lb = np.array(lb, dtype=np.float32)
             nl = len(lb)
             if nl:
@@ -121,7 +122,7 @@ def verify_image_label(args):
             lb = np.zeros((0, 39), dtype=np.float32) if keypoint else np.zeros((0, 5), dtype=np.float32)
         if keypoint:
             keypoints = lb[:, 5:].reshape(-1, 17, 2)
-        lb = lb[:, :5]
+        lb = lb[:, :6]
         return im_file, lb, shape, segments, keypoints, nm, nf, ne, nc, msg
     except Exception as e:
         nc = 1

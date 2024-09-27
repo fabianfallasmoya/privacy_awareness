@@ -164,10 +164,11 @@ class Bboxes:
 
 class Instances:
 
-    def __init__(self, bboxes, segments=None, keypoints=None, bbox_format="xywh", normalized=True) -> None:
+    def __init__(self, bboxes, pa, segments=None, keypoints=None, bbox_format="xywh", normalized=True) -> None:
         """
         Args:
             bboxes (ndarray): bboxes with shape [N, 4].
+            pa (ndarray): privacy awareness with shape [N, 1].
             segments (list | ndarray): segments.
             keypoints (ndarray): keypoints with shape [N, 17, 2].
         """
@@ -176,6 +177,7 @@ class Instances:
         self._bboxes = Bboxes(bboxes=bboxes, format=bbox_format)
         self.keypoints = keypoints
         self.normalized = normalized
+        self.pa = pa
 
         if len(segments) > 0:
             # list[np.array(1000, 2)] * num_samples
@@ -247,12 +249,14 @@ class Instances:
         keypoints = self.keypoints[index] if self.keypoints is not None else None
         bboxes = self.bboxes[index]
         bbox_format = self._bboxes.format
+        pa = self.pa
         return Instances(
             bboxes=bboxes,
             segments=segments,
             keypoints=keypoints,
             bbox_format=bbox_format,
             normalized=self.normalized,
+            pa=pa
         )
 
     def flipud(self, h):
