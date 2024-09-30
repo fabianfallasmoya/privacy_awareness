@@ -14,6 +14,7 @@ from ultralytics.yolo.utils.checks import check_file, check_requirements
 from ultralytics.yolo.utils.metrics import ConfusionMatrix, DetMetrics, box_iou
 from ultralytics.yolo.utils.plotting import output_to_target, plot_images
 from ultralytics.yolo.utils.torch_utils import de_parallel
+from ultralytics import globals
 
 
 class DetectionValidator(BaseValidator):
@@ -172,9 +173,27 @@ class DetectionValidator(BaseValidator):
         array_with_area = torch.cat((detections, area.unsqueeze(1)), dim=1)
         return array_with_area
 
-    def calculate_pa(self, detections):
+    def calculate_pa_1(self, detections):
+
+        # first calculate the bbox size
+        detections = self.calculate_bbox_size(detections)
+
         # Calculate the PA using the weights formula
-        pa = 0.5 * detections[:, 4] + 0.5 * detections[:, 6]
+        pa = 0.75 * detections[:, 4] + 0.25 * detections[:, 6]
+        # Add the Privacy Awareness as an extra column
+        array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
+
+        # now classify continuous PA value into PA interval i.e. 0.73 -> 0.8
+        pa_intervals = torch.ceil(pa / 0.2) * 0.2
+
+        array_with_pa = torch.cat((array_with_pa, pa_intervals.unsqueeze(1)), dim=1)
+
+        return array_with_pa
+
+    def calculate_pa_0(self, detections):
+
+        # Calculate the PA using the weights formula
+        pa = detections[:, 4]
         # Add the Privacy Awareness as an extra column
         array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
 
@@ -202,18 +221,25 @@ class DetectionValidator(BaseValidator):
         iou = box_iou(labels[:, 1:5], detections[:, :4])
         correct = np.zeros((detections.shape[0], self.iouv.shape[0])).astype(bool)
         correct_class = labels[:, 0:1] == detections[:, 5]
+        correct_pa = None
 
         # predict the privacy awareness
-        # first calculate the bbox size
-        detections_pa = self.calculate_bbox_size(detections)
-
-        # now calculate the PA by combining the confidence score and bbox size, x1, y1, x2, y2, conf, class, area, PA (continuous), PA (intervals)
-        detections_pa = self.calculate_pa(detections_pa)
-
         # normalize the PA labels since their range is [1,5] but we want them in [0,1] 0.2, 0.4, 0.6, 0.8, 1
         labels_pa = self.normalize_pa_labels(labels)
 
-        correct_pa = labels_pa[:, 5:6] == detections_pa[:, 8]
+        match globals.eval_case:
+            case 1:
+
+                # Case 1: calculate the PA by combining the confidence score and bbox size, index: x1, y1, x2, y2, conf, class, area, PA (continuous), PA (intervals)
+                detections_pa = self.calculate_pa_1(detections)
+
+                correct_pa = labels_pa[:, 5:6] == detections_pa[:, 8]
+
+            case _:
+                # Case 0: calculate the PA using only confidence score, index: x1, y1, x2, y2, conf, class, PA (continuous), PA (intervals)
+                detections_pa = self.calculate_pa_0(detections)
+
+                correct_pa = labels_pa[:, 5:6] == detections_pa[:, 7]
 
         for i in range(len(self.iouv)):
             x = torch.where((iou >= self.iouv[i]) & correct_class & correct_pa)  # IoU > threshold and classes match and correct pa
