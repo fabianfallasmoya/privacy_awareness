@@ -173,6 +173,64 @@ class DetectionValidator(BaseValidator):
         array_with_area = torch.cat((detections, area.unsqueeze(1)), dim=1)
         return array_with_area
 
+    def sigmoid(self, x, threshold=0.1, alpha=10):
+        return 1 / (1 + torch.exp(-alpha * (x - threshold)))
+
+    def calculate_pa_1_sigmoid(self, detections):
+
+        # first calculate the bbox size
+        detections = self.calculate_bbox_size(detections)
+
+        # then define sigmoid parameters
+        alpha = 40
+        threshold = 0.001
+
+        # Calculate the PA using the weights formula
+        pa = 0.5 * detections[:, 4] + 0.5 * self.sigmoid(detections[:, 6], threshold=threshold, alpha=alpha)
+        # Add the Privacy Awareness as an extra column
+        array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
+
+        # now classify continuous PA value into PA interval i.e. 0.73 -> 0.8
+        pa_intervals = torch.ceil(pa / 0.2) * 0.2
+
+        array_with_pa = torch.cat((array_with_pa, pa_intervals.unsqueeze(1)), dim=1)
+
+        return array_with_pa
+
+    def exponentialBoostTransform(self, x, threshold=0.1, alpha=10):
+        # x in the proper range [0, 1]
+        x = torch.clip(x, 0, 1)
+
+        # a threshold based transformation
+        #
+        # 1 - np.exp(-alpha * (x - threshold)) is a decreasing exponential function.
+        # when x is equal to the threshold, the function equals 0, and as x increases,
+        # the function approaches 1 asymptotically (np.maximum is to stabilize the results).
+        return torch.where(x > threshold,
+                        torch.maximum(1 - torch.exp(-alpha * (x - threshold)), x),
+                        x)
+
+    def calculate_pa_1_expBoost(self, detections):
+
+        # first calculate the bbox size
+        detections = self.calculate_bbox_size(detections)
+
+        # then define sigmoid parameters
+        alpha = 300
+        threshold = 0.00005
+
+        # Calculate the PA using the weights formula
+        pa = 0.75 * detections[:, 4] + 0.25 * self.exponentialBoostTransform(detections[:, 6], threshold=threshold, alpha=alpha)
+        # Add the Privacy Awareness as an extra column
+        array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
+
+        # now classify continuous PA value into PA interval i.e. 0.73 -> 0.8
+        pa_intervals = torch.ceil(pa / 0.2) * 0.2
+
+        array_with_pa = torch.cat((array_with_pa, pa_intervals.unsqueeze(1)), dim=1)
+
+        return array_with_pa
+
     def calculate_pa_1(self, detections):
 
         # first calculate the bbox size
@@ -231,7 +289,9 @@ class DetectionValidator(BaseValidator):
             case 1:
 
                 # Case 1: calculate the PA by combining the confidence score and bbox size, index: x1, y1, x2, y2, conf, class, area, PA (continuous), PA (intervals)
-                detections_pa = self.calculate_pa_1(detections)
+                #detections_pa = self.calculate_pa_1(detections)
+                detections_pa = self.calculate_pa_1_sigmoid(detections)
+                #detections_pa = self.calculate_pa_1_expBoost(detections)
 
                 correct_pa = labels_pa[:, 5:6] == detections_pa[:, 8]
 
