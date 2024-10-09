@@ -95,6 +95,7 @@ class DetectionValidator(BaseValidator):
                             ratio_pad=batch["ratio_pad"][si])  # native-space pred
 
             # Evaluate
+            pred_pa = []
             if nl:
                 height, width = batch["img"].shape[2:]
                 tbox = ops.xywh2xyxy(bbox) * torch.tensor(
@@ -103,12 +104,14 @@ class DetectionValidator(BaseValidator):
                                 ratio_pad=batch["ratio_pad"][si])  # native-space labels
                 labelsn = torch.cat((cls, tbox, pa), 1)  # native-space labels
                 correct_bboxes = self._process_batch(predn, labelsn)
-                correct_bboxes_pa = self._process_batch_pa(predn, labelsn)
+                correct_bboxes_pa, pred_pa = self._process_batch_pa(predn, labelsn)
                 # TODO: maybe remove these `self.` arguments as they already are member variable
                 if self.args.plots:
                     self.confusion_matrix.process_batch(predn, labelsn)
             # NOTE Change correct_bboxes for correct_bboxes_pa
-            self.stats.append((correct_bboxes_pa, pred[:, 4], pred[:, 5], cls.squeeze(-1)))  # (conf, pcls, tcls)
+            #self.stats.append((correct_bboxes, pred[:, 4], pred[:, 5], cls.squeeze(-1)))  # (conf, pcls, tcls)
+            #self.stats.append((correct_bboxes_pa, pred_pa[:, 6], pred[:, 5], cls.squeeze(-1)))  # (conf, pcls, tcls)
+            self.stats.append((correct_bboxes_pa, pred_pa[:, 6], pred_pa[:, 7]*5, pa.squeeze(-1)))  # (conf, pcls, tcls)
 
             # Save
             if self.args.save_json:
@@ -169,9 +172,7 @@ class DetectionValidator(BaseValidator):
         height = torch.abs(detections[:, 3] - detections[:, 1])  # |y2 - y1|
         # Calculate the normlized area for 640x640 pixels images
         area = width * height / 409600
-        # Add the area as an extra column
-        array_with_area = torch.cat((detections, area.unsqueeze(1)), dim=1)
-        return array_with_area
+        return area
 
     def sigmoid(self, x, threshold=0.1, alpha=10):
         return 1 / (1 + torch.exp(-alpha * (x - threshold)))
@@ -179,14 +180,14 @@ class DetectionValidator(BaseValidator):
     def calculate_pa_1_sigmoid(self, detections):
 
         # first calculate the bbox size
-        detections = self.calculate_bbox_size(detections)
+        area = self.calculate_bbox_size(detections)
 
         # then define sigmoid parameters
         alpha = 40
         threshold = 0.001
 
         # Calculate the PA using the weights formula
-        pa = 0.5 * detections[:, 4] + 0.5 * self.sigmoid(detections[:, 6], threshold=threshold, alpha=alpha)
+        pa = 0.5 * detections[:, 4] + 0.5 * self.sigmoid(area, threshold=threshold, alpha=alpha)
         # Add the Privacy Awareness as an extra column
         array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
 
@@ -213,14 +214,14 @@ class DetectionValidator(BaseValidator):
     def calculate_pa_1_expBoost(self, detections):
 
         # first calculate the bbox size
-        detections = self.calculate_bbox_size(detections)
+        area = self.calculate_bbox_size(detections)
 
         # then define sigmoid parameters
         alpha = 300
         threshold = 0.00005
 
         # Calculate the PA using the weights formula
-        pa = 0.75 * detections[:, 4] + 0.25 * self.exponentialBoostTransform(detections[:, 6], threshold=threshold, alpha=alpha)
+        pa = 0.75 * detections[:, 4] + 0.25 * self.exponentialBoostTransform(area, threshold=threshold, alpha=alpha)
         # Add the Privacy Awareness as an extra column
         array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
 
@@ -234,10 +235,10 @@ class DetectionValidator(BaseValidator):
     def calculate_pa_1(self, detections):
 
         # first calculate the bbox size
-        detections = self.calculate_bbox_size(detections)
+        area = self.calculate_bbox_size(detections)
 
         # Calculate the PA using the weights formula
-        pa = 0.75 * detections[:, 4] + 0.25 * detections[:, 6]
+        pa = 0.75 * detections[:, 4] + 0.25 * area
         # Add the Privacy Awareness as an extra column
         array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
 
@@ -288,12 +289,12 @@ class DetectionValidator(BaseValidator):
         match globals.eval_case:
             case 1:
 
-                # Case 1: calculate the PA by combining the confidence score and bbox size, index: x1, y1, x2, y2, conf, class, area, PA (continuous), PA (intervals)
+                # Case 1: calculate the PA by combining the confidence score and bbox size, index: x1, y1, x2, y2, conf, class, PA (continuous), PA (intervals)
                 #detections_pa = self.calculate_pa_1(detections)
                 detections_pa = self.calculate_pa_1_sigmoid(detections)
                 #detections_pa = self.calculate_pa_1_expBoost(detections)
 
-                correct_pa = labels_pa[:, 5:6] == detections_pa[:, 8]
+                correct_pa = labels_pa[:, 5:6] == detections_pa[:, 7]
 
             case _:
                 # Case 0: calculate the PA using only confidence score, index: x1, y1, x2, y2, conf, class, PA (continuous), PA (intervals)
@@ -312,7 +313,7 @@ class DetectionValidator(BaseValidator):
                     # matches = matches[matches[:, 2].argsort()[::-1]]
                     matches = matches[np.unique(matches[:, 0], return_index=True)[1]]
                 correct[matches[:, 1].astype(int), i] = True
-        return torch.tensor(correct, dtype=torch.bool, device=detections.device)
+        return torch.tensor(correct, dtype=torch.bool, device=detections.device), detections_pa
 
 
     def get_dataloader(self, dataset_path, batch_size):
