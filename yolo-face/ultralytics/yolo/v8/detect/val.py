@@ -110,8 +110,8 @@ class DetectionValidator(BaseValidator):
                     self.confusion_matrix.process_batch(predn, labelsn)
             # NOTE Change correct_bboxes for correct_bboxes_pa
             #self.stats.append((correct_bboxes, pred[:, 4], pred[:, 5], cls.squeeze(-1)))  # (conf, pcls, tcls)
-            #self.stats.append((correct_bboxes_pa, pred_pa[:, 6], pred[:, 5], cls.squeeze(-1)))  # (conf, pcls, tcls)
-            self.stats.append((correct_bboxes_pa, pred_pa[:, 6], pred_pa[:, 7]*5, pa.squeeze(-1)))  # (conf, pcls, tcls)
+            #self.stats.append((correct_bboxes_pa, pred_pa[:, 6], pred[:, 5], cls.squeeze(-1)))  # (PA, pcls, tcls)
+            self.stats.append((correct_bboxes_pa, pred_pa[:, 6], pred_pa[:, 7]*5, pa.squeeze(-1)))  # (PA, predicted PA discreto, label PA discreto)
 
             # Save
             if self.args.save_json:
