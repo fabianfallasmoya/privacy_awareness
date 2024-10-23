@@ -139,6 +139,7 @@ wandb/
 weights/
 *.weights
 *.pt
+*.pth
 *.pb
 *.onnx
 *.engine

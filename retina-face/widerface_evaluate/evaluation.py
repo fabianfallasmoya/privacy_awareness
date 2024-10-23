@@ -78,6 +78,65 @@ def get_gt_boxes_from_txt(gt_path, cache_dir):
     f.close()
     return boxes
 
+def get_gt_boxes_from_txt2(gt_path):
+
+    f = open(gt_path, 'r')
+    state = 0
+    lines = f.readlines()
+    lines = list(map(lambda x: x.rstrip('\r\n'), lines))
+    print(len(lines))
+    f.close()
+
+    # Initialize arrays for gt boxes
+    current_boxes = []
+    current_file = []
+    current_events = []
+    current_event_name = None
+    total_gt_boxes = []
+
+    # Initialize arrays for gt files
+    file_list = []
+    event_list = []
+    total_gt_files = []
+
+    current_name = None
+    for line in lines:
+        if state == 0 and '--' in line:
+            state = 1
+            current_name = line.split('/')[1]
+            current_name = current_name.split('.')[0]
+            file_list.append([np.array(current_name)])
+            current_event_name = line.split('/')[0]
+            continue
+        if state == 1:
+            state = 2
+            continue
+
+        if state == 2 and '--' in line:
+            state = 1
+            current_file.append([np.array(current_boxes).astype('int32')])
+            current_boxes = []
+            if line.split('/')[0] != current_event_name:
+                current_event_name = line.split('/')[0]
+                event_list.append([np.array(file_list, dtype=object)])
+                file_list = []
+                current_events.append([np.array(current_file, dtype=object)])
+                current_file = []
+            current_name = line.split('/')[1]
+            current_name = current_name.split('.')[0]
+            file_list.append([np.array(current_name)])
+            continue
+
+        if state == 2:
+            box = [float(x) for x in line.split(' ')[:4]]
+            current_boxes.append(box)
+            continue
+
+    total_gt_boxes = np.array(current_events, dtype=object)
+    total_gt_files = np.array(event_list, dtype=object)
+
+    return total_gt_boxes, total_gt_files
+
 
 def read_pred_file(filepath):
 
@@ -280,6 +339,65 @@ def evaluation(pred, gt_path, iou_thresh=0.5):
     print("Hard   Val AP: {}".format(aps[2]))
     print("=================================================")
 
+def evaluation2(pred, gt_path, iou_thresh=0.5):
+    pred = get_preds(pred)
+    norm_score(pred)
+    dummy_list, event_list, file_list, hard_gt_list, medium_gt_list, easy_gt_list = get_gt_boxes(gt_path)
+    facebox_list, file_list = get_gt_boxes_from_txt2("/home/jcordero/work/OD/datasets/WIDER_val/images/wider_face_val_bbx_gt.txt")
+    event_num = len(event_list)
+    thresh_num = 1000
+    #settings = ['easy', 'medium', 'hard']
+    #setting_gts = [easy_gt_list, medium_gt_list, hard_gt_list]
+    aps = []
+
+    # different setting
+    gt_list = medium_gt_list
+    count_face = 0
+    pr_curve = np.zeros((thresh_num, 2)).astype('float')
+
+    pbar = tqdm.tqdm(range(event_num))
+    for i in pbar:
+        pbar.set_description('Processing')
+        event_name = str(event_list[i][0][0])
+        ##modified JACQ
+        img_list = file_list[i][0]
+        pred_list = pred[event_name]
+        sub_gt_list = gt_list[i][0]
+        # img_pr_info_list = np.zeros((len(img_list), thresh_num, 2))
+        ##modified JACQ
+        gt_bbx_list = facebox_list[i][0]
+
+        for j in range(len(img_list)):
+            #modified JACQ
+            #pred_info = pred_list[str(img_list[j][0][0])]
+            pred_info = pred_list[str(img_list[j][0])]
+
+            gt_boxes = gt_bbx_list[j][0].astype('float')
+            keep_index = sub_gt_list[j][0]
+            count_face += len(gt_boxes)
+
+            if len(gt_boxes) == 0 or len(pred_info) == 0:
+                continue
+            ignore = np.ones(gt_boxes.shape[0])
+            # if len(keep_index) != 0:
+            #     ignore[keep_index-1] = 1
+            pred_recall, proposal_list = image_eval(pred_info, gt_boxes, ignore, iou_thresh)
+
+            _img_pr_info = img_pr_info(thresh_num, pred_info, proposal_list, pred_recall)
+
+            pr_curve += _img_pr_info
+    pr_curve = dataset_pr_info(thresh_num, pr_curve, count_face)
+
+    propose = pr_curve[:, 0]
+    recall = pr_curve[:, 1]
+
+    ap = voc_ap(recall, propose)
+    aps.append(ap)
+
+    print("==================== Results ====================")
+    print("Medium Val AP: {}".format(aps[0]))
+    print("=================================================")
+
 
 if __name__ == '__main__':
 
@@ -288,7 +406,7 @@ if __name__ == '__main__':
     parser.add_argument('-g', '--gt', default='./ground_truth/')
 
     args = parser.parse_args()
-    evaluation(args.pred, args.gt)
+    evaluation2(args.pred, args.gt)
 
 
 
