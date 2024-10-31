@@ -137,6 +137,19 @@ def get_gt_boxes_from_txt2(gt_path):
 
     return total_gt_boxes, total_gt_files
 
+def create_subdirectory_array(directory_path):
+    # Get a list of subdirectory names in the specified directory
+    subdirectories = sorted([name for name in os.listdir(directory_path) if os.path.isdir(os.path.join(directory_path, name))])
+
+    main_event_list = []
+    for sub in subdirectories:
+        main_event_list.append(np.array(sub, dtype=f'<U{len(sub)}'))
+
+    # Create a numpy array where each element is an array with the subdirectory name
+    subdirectory_array = np.array([main_event_list], dtype=object)
+
+    return subdirectory_array
+
 
 def read_pred_file(filepath):
 
@@ -339,12 +352,12 @@ def evaluation(pred, gt_path, iou_thresh=0.5):
     print("Hard   Val AP: {}".format(aps[2]))
     print("=================================================")
 
-def evaluation2(pred, gt_path, iou_thresh=0.5):
+def evaluation2(pred, gt_path, img_path, iou_thresh=0.5):
     pred = get_preds(pred)
     norm_score(pred)
-    dummy_list, event_list, file_list, hard_gt_list, medium_gt_list, easy_gt_list = get_gt_boxes(gt_path)
-    facebox_list, file_list = get_gt_boxes_from_txt2("/home/jcordero/work/OD/datasets/WIDER_val/images/wider_face_val_bbx_gt.txt")
-    event_num = len(event_list)
+    event_list = create_subdirectory_array(img_path)
+    facebox_list, file_list = get_gt_boxes_from_txt2(gt_path)
+    event_num = len(event_list[0])
     thresh_num = 1000
     aps = []
 
@@ -355,7 +368,7 @@ def evaluation2(pred, gt_path, iou_thresh=0.5):
     pbar = tqdm.tqdm(range(event_num))
     for i in pbar:
         pbar.set_description('Processing')
-        event_name = str(event_list[i][0][0])
+        event_name = str(event_list[0][i])
         img_list = file_list[i][0]
         pred_list = pred[event_name]
         # img_pr_info_list = np.zeros((len(img_list), thresh_num, 2))
@@ -392,10 +405,11 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--pred', default="./widerface_txt/")
-    parser.add_argument('-g', '--gt', default='./ground_truth/')
+    parser.add_argument('-g', '--gt', default='../data/widerface/val/wider_face_val_bbx_gt.txt')
+    parser.add_argument('-i', '--img_path', default='../data/widerface/val/images/')
 
     args = parser.parse_args()
-    evaluation2(args.pred, args.gt)
+    evaluation2(args.pred, args.gt, args.img_path)
 
 
 

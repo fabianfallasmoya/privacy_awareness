@@ -1,0 +1,1884 @@
+0--Parade/0_Parade_marchingband_1_104.jpg
+25
+343 229 6 14 2
+359 233 10 25 3
+520 213 9 17 3
+461 217 10 19 3
+562 219 5 12 2
+604 218 5 11 2
+21 237 9 18 3
+78 236 12 21 3
+93 228 9 17 2
+42 232 6 11 2
+63 226 7 14 2
+111 227 6 12 1
+14 223 8 14 2
+33 241 7 14 2
+149 229 10 19 3
+156 220 6 12 2
+175 219 8 15 2
+212 212 7 15 2
+220 218 8 18 2
+281 247 17 30 4
+255 230 8 15 2
+196 232 22 42 4
+312 210 7 14 3
+375 214 7 11 2
+624 202 12 25 3
+0--Parade/0_Parade_marchingband_1_139.jpg
+9
+432 240 107 94 4
+524 76 51 84 4
+189 43 20 37 3
+140 78 24 42 3
+244 79 21 52 3
+285 87 20 48 2
+590 189 21 44 2
+44 74 25 45 3
+450 117 32 50 1
+0--Parade/0_Parade_marchingband_1_20.jpg
+22
+18 334 18 30 4
+159 307 20 32 4
+209 313 12 18 3
+79 312 8 14 3
+51 325 13 21 4
+145 310 13 21 4
+188 226 6 8 1
+339 298 22 35 4
+290 295 17 28 4
+279 288 15 23 4
+240 306 10 16 3
+393 325 12 22 3
+367 307 10 17 3
+308 310 9 14 3
+424 300 7 12 2
+385 306 7 11 2
+455 287 11 17 3
+501 297 10 14 3
+485 300 7 11 2
+532 225 27 44 3
+411 320 10 15 2
+602 283 29 36 2
+1--Handshaking/1_Handshaking_Handshaking_1_107.jpg
+1
+244 81 109 118 4
+1--Handshaking/1_Handshaking_Handshaking_1_134.jpg
+2
+200 56 44 120 4
+436 49 44 132 3
+1--Handshaking/1_Handshaking_Handshaking_1_158.jpg
+4
+131 127 70 134 4
+290 208 32 81 4
+437 35 79 182 4
+274 264 35 57 4
+1--Handshaking/1_Handshaking_Handshaking_1_35.jpg
+1
+275 65 120 118 5
+1--Handshaking/1_Handshaking_Handshaking_1_94.jpg
+1
+238 95 148 162 5
+11--Meeting/11_Meeting_Meeting_11_Meeting_Meeting_11_102.jpg
+6
+278 152 71 151 5
+375 20 67 122 5
+83 69 72 115 5
+5 219 57 143 5
+472 183 67 125 5
+547 230 64 136 4
+11--Meeting/11_Meeting_Meeting_11_Meeting_Meeting_11_108.jpg
+2
+411 132 29 52 3
+552 294 25 45 4
+11--Meeting/11_Meeting_Meeting_11_Meeting_Meeting_11_176.jpg
+17
+495 83 28 62 4
+408 190 13 25 4
+434 230 20 42 3
+484 233 16 29 3
+404 266 19 47 3
+356 199 14 22 4
+256 204 17 30 4
+311 200 14 26 4
+211 211 15 32 4
+222 209 11 20 3
+178 200 12 21 4
+135 253 17 30 4
+75 228 20 40 4
+117 197 14 27 4
+9 217 15 31 4
+104 71 11 25 4
+476 221 11 26 2
+11--Meeting/11_Meeting_Meeting_11_Meeting_Meeting_11_71.jpg
+11
+283 103 22 36 4
+217 105 25 37 4
+190 123 30 50 4
+377 105 28 43 4
+461 114 25 50 4
+487 122 26 42 2
+483 156 48 63 4
+524 240 44 115 3
+11 41 25 32 4
+145 152 22 55 3
+46 200 47 65 4
+12--Group/12_Group_Group_12_Group_Group_12_10.jpg
+13
+52 100 42 79 4
+154 107 36 74 4
+235 138 35 55 4
+338 94 32 66 4
+426 111 35 68 4
+482 82 34 78 4
+537 194 27 38 4
+569 126 39 73 4
+48 284 45 79 4
+180 317 39 78 4
+345 374 39 66 4
+418 306 37 81 4
+533 312 50 99 4
+12--Group/12_Group_Group_12_Group_Group_12_101.jpg
+8
+103 365 32 62 4
+218 172 32 53 4
+201 117 32 52 4
+299 106 31 49 4
+325 155 30 57 4
+412 110 35 51 4
+456 189 32 49 4
+518 118 32 58 4
+12--Group/12_Group_Group_12_Group_Group_12_123.jpg
+5
+513 32 40 89 4
+339 82 25 52 4
+405 93 18 38 3
+277 97 15 35 3
+143 62 29 59 4
+12--Group/12_Group_Group_12_Group_Group_12_144.jpg
+4
+138 58 72 152 4
+225 135 69 142 4
+319 102 79 159 4
+442 135 70 146 4
+13--Interview/13_Interview_Interview_2_People_Visible_13_107.jpg
+1
+273 40 72 78 4
+13--Interview/13_Interview_Interview_2_People_Visible_13_155.jpg
+1
+214 106 222 299 5
+13--Interview/13_Interview_Interview_2_People_Visible_13_204.jpg
+1
+286 140 86 217 5
+14--Traffic/14_Traffic_Traffic_14_253.jpg
+1
+198 112 65 112 4
+14--Traffic/14_Traffic_Traffic_14_267.jpg
+5
+144 434 10 19 3
+104 419 11 18 3
+95 398 11 18 3
+46 406 10 18 3
+46 357 5 10 2
+14--Traffic/14_Traffic_Traffic_14_361.jpg
+4
+527 284 9 13 3
+397 306 2 4 1
+418 310 2 4 1
+426 308 2 5 1
+14--Traffic/14_Traffic_Traffic_14_380.jpg
+16
+581 248 40 66 3
+558 176 29 44 1
+452 192 25 46 3
+405 167 20 28 4
+335 160 21 36 3
+347 134 16 21 1
+481 101 8 16 3
+308 160 13 21 2
+284 133 10 16 2
+249 147 15 26 1
+183 197 55 71 4
+141 140 14 18 2
+118 136 15 20 2
+72 136 17 25 3
+29 142 19 22 3
+0 127 12 17 3
+15--Stock_Market/15_Stock_Market_Stock_Market_15_102.jpg
+1
+178 362 41 115 3
+15--Stock_Market/15_Stock_Market_Stock_Market_15_241.jpg
+4
+86 323 36 78 4
+220 339 34 69 4
+350 355 39 74 4
+436 304 34 88 4
+15--Stock_Market/15_Stock_Market_Stock_Market_15_286.jpg
+4
+430 124 57 108 4
+389 197 37 77 4
+304 229 25 45 3
+248 244 17 34 2
+15--Stock_Market/15_Stock_Market_Stock_Market_15_301.jpg
+1
+116 105 66 172 4
+15--Stock_Market/15_Stock_Market_Stock_Market_15_303.jpg
+1
+407 96 189 420 5
+16--Award_Ceremony/16_Award_Ceremony_Awards_Ceremony_16_116.jpg
+2
+244 67 81 79 5
+342 49 83 76 5
+16--Award_Ceremony/16_Award_Ceremony_Awards_Ceremony_16_124.jpg
+1
+276 34 162 209 5
+16--Award_Ceremony/16_Award_Ceremony_Awards_Ceremony_16_134.jpg
+1
+266 63 97 62 4
+16--Award_Ceremony/16_Award_Ceremony_Awards_Ceremony_16_135.jpg
+1
+219 33 169 157 5
+16--Award_Ceremony/16_Award_Ceremony_Awards_Ceremony_16_141.jpg
+19
+0 214 19 55 3
+15 228 17 56 4
+55 244 24 48 4
+86 243 24 51 4
+116 263 23 41 4
+217 233 23 51 3
+245 226 25 48 4
+269 242 18 54 3
+279 237 15 55 3
+290 241 17 45 4
+310 261 11 39 3
+319 268 10 36 3
+341 280 14 33 3
+356 291 12 33 4
+379 296 11 29 3
+399 301 10 27 3
+405 299 7 27 2
+20 283 16 42 2
+170 42 34 71 2
+17--Ceremony/17_Ceremony_Ceremony_17_1005.jpg
+8
+201 85 125 100 4
+341 50 35 25 3
+421 67 35 24 3
+493 62 31 27 3
+517 41 33 24 3
+539 67 33 24 3
+600 65 37 26 3
+273 36 19 14 2
+17--Ceremony/17_Ceremony_Ceremony_17_1007.jpg
+2
+151 154 109 99 4
+437 186 122 110 4
+17--Ceremony/17_Ceremony_Ceremony_17_1009.jpg
+1
+108 175 65 124 4
+17--Ceremony/17_Ceremony_Ceremony_17_1037.jpg
+1
+288 57 124 77 4
+17--Ceremony/17_Ceremony_Ceremony_17_1048.jpg
+4
+16 207 24 22 3
+80 196 21 19 3
+209 68 58 67 4
+291 46 67 72 4
+18--Concerts/18_Concerts_Concerts_18_1004.jpg
+1
+199 50 156 289 5
+18--Concerts/18_Concerts_Concerts_18_1013.jpg
+1
+288 135 67 146 4
+18--Concerts/18_Concerts_Concerts_18_1015.jpg
+4
+514 288 29 26 4
+386 301 32 26 4
+249 304 29 30 4
+97 303 32 30 4
+18--Concerts/18_Concerts_Concerts_18_1016.jpg
+1
+120 71 87 74 4
+18--Concerts/18_Concerts_Concerts_18_102.jpg
+1
+315 60 72 75 4
+19--Couple/19_Couple_Couple_19_1014.jpg
+2
+432 115 124 135 5
+273 207 124 141 4
+19--Couple/19_Couple_Couple_19_106.jpg
+2
+191 113 37 76 5
+364 157 36 80 5
+19--Couple/19_Couple_Couple_19_110.jpg
+2
+426 189 84 132 5
+98 147 84 134 5
+19--Couple/19_Couple_Couple_19_125.jpg
+3
+208 80 134 313 5
+423 107 125 292 5
+24 163 116 258 5
+19--Couple/19_Couple_Couple_19_139.jpg
+2
+229 149 100 199 5
+321 121 82 191 4
+2--Demonstration/2_Demonstration_Demonstration_Or_Protest_2_30.jpg
+4
+481 78 25 55 2
+372 77 11 16 3
+272 58 12 20 3
+29 61 5 9 1
+2--Demonstration/2_Demonstration_Demonstration_Or_Protest_2_32.jpg
+47
+0 587 35 51 4
+0 509 10 26 1
+32 489 24 22 3
+15 503 15 14 2
+105 506 34 35 4
+192 511 32 37 4
+150 582 49 47 4
+181 506 24 26 3
+169 494 24 24 2
+286 497 30 29 4
+121 484 20 15 2
+92 483 23 20 2
+188 482 12 12 2
+210 482 17 13 3
+232 482 12 10 2
+255 480 9 11 2
+267 486 22 16 3
+182 481 7 6 1
+128 473 11 8 1
+160 489 15 14 2
+323 495 17 17 2
+329 521 19 18 2
+392 497 16 16 3
+433 487 10 12 2
+398 484 10 8 2
+326 540 37 38 4
+439 515 22 25 3
+454 515 35 30 4
+483 494 11 10 2
+467 501 14 11 2
+521 513 11 10 2
+541 520 14 12 2
+559 478 16 12 3
+586 504 11 10 2
+605 525 14 12 2
+602 499 9 9 2
+613 495 9 8 2
+622 495 7 6 2
+630 515 10 13 1
+452 492 12 8 2
+179 382 10 7 1
+221 404 9 8 1
+525 492 9 7 2
+360 504 14 14 2
+342 494 12 13 2
+328 481 10 7 2
+306 475 7 8 2
+20--Family_Group/20_Family_Group_Family_Group_20_100.jpg
+5
+101 147 44 89 4
+191 154 45 90 4
+308 170 54 98 4
+429 191 51 104 4
+546 35 64 132 4
+20--Family_Group/20_Family_Group_Family_Group_20_1003.jpg
+4
+120 82 82 190 5
+209 110 89 250 5
+300 127 82 265 5
+393 184 62 185 5
+20--Family_Group/20_Family_Group_Family_Group_20_101.jpg
+16
+23 59 25 44 4
+84 83 23 37 4
+143 59 22 39 4
+240 27 22 42 4
+307 46 23 41 4
+346 67 23 35 4
+398 69 24 39 4
+457 73 27 41 4
+527 90 25 43 4
+606 54 29 50 4
+558 264 32 54 4
+489 247 27 50 4
+417 234 26 52 4
+351 222 24 40 4
+127 192 32 56 4
+45 244 27 46 4
+20--Family_Group/20_Family_Group_Family_Group_20_1015.jpg
+5
+139 403 16 31 3
+239 310 44 116 4
+322 389 55 112 4
+404 369 61 111 4
+616 270 9 24 2
+20--Family_Group/20_Family_Group_Family_Group_20_1026.jpg
+6
+137 117 47 37 4
+230 142 37 44 4
+369 125 34 34 4
+423 116 45 57 4
+296 241 40 44 4
+126 226 39 42 4
+21--Festival/21_Festival_Festival_21_100.jpg
+3
+417 79 89 178 4
+276 405 75 157 4
+67 275 39 79 2
+21--Festival/21_Festival_Festival_21_107.jpg
+17
+52 221 40 90 4
+111 198 37 80 4
+218 192 24 56 3
+80 94 17 39 2
+293 182 27 62 3
+352 179 20 55 3
+371 169 30 68 4
+427 197 23 51 4
+450 196 20 55 4
+491 181 20 47 3
+525 172 12 29 2
+506 185 10 34 2
+551 179 10 26 2
+572 169 15 28 3
+587 176 13 20 2
+599 169 14 28 3
+623 175 14 23 3
+21--Festival/21_Festival_Festival_21_140.jpg
+3
+219 225 12 9 2
+268 217 12 12 2
+323 233 30 21 3
+21--Festival/21_Festival_Festival_21_193.jpg
+18
+129 410 20 40 3
+20 460 17 58 1
+107 363 9 23 2
+80 351 9 17 2
+129 356 10 22 2
+167 361 7 17 1
+172 353 9 20 2
+234 376 11 26 2
+246 419 10 44 1
+343 377 5 21 1
+389 406 16 40 2
+447 426 14 35 2
+511 397 14 29 2
+495 355 5 15 1
+500 323 7 14 2
+596 333 9 13 2
+618 377 9 22 2
+601 305 5 9 1
+21--Festival/21_Festival_Festival_21_201.jpg
+19
+24 312 21 41 3
+135 354 13 23 3
+202 334 20 34 3
+182 287 11 18 3
+244 307 17 26 3
+273 282 10 23 2
+248 281 9 22 3
+314 290 14 23 3
+346 259 12 23 3
+381 275 11 16 2
+401 246 10 20 1
+403 271 11 20 2
+425 246 16 31 3
+447 317 15 23 3
+481 257 24 39 4
+565 256 9 19 2
+574 234 10 18 2
+588 252 14 28 3
+173 302 8 16 2
+22--Picnic/22_Picnic_Picnic_22_10.jpg
+4
+172 107 37 97 3
+252 112 34 77 4
+356 205 37 66 4
+485 159 32 79 3
+22--Picnic/22_Picnic_Picnic_22_140.jpg
+8
+197 297 13 25 3
+261 302 16 25 4
+355 320 13 23 4
+491 334 15 25 3
+576 325 10 21 3
+542 327 12 21 3
+575 370 9 23 3
+397 337 14 19 3
+22--Picnic/22_Picnic_Picnic_22_152.jpg
+5
+80 197 27 51 3
+75 310 15 51 2
+262 187 17 29 3
+369 117 25 39 4
+538 302 28 77 2
+22--Picnic/22_Picnic_Picnic_22_208.jpg
+2
+441 155 47 93 4
+73 234 41 77 4
+22--Picnic/22_Picnic_Picnic_22_241.jpg
+2
+146 241 32 73 4
+227 91 46 77 4
+23--Shoppers/23_Shoppers_Shoppers_23_10.jpg
+9
+38 344 25 48 4
+171 277 23 42 4
+293 298 15 31 4
+366 278 12 39 3
+399 266 15 33 4
+626 301 9 21 2
+103 308 9 27 1
+334 279 10 17 2
+476 296 10 21 2
+23--Shoppers/23_Shoppers_Shoppers_23_122.jpg
+2
+160 38 49 94 4
+456 4 84 126 4
+23--Shoppers/23_Shoppers_Shoppers_23_167.jpg
+1
+226 209 64 116 4
+23--Shoppers/23_Shoppers_Shoppers_23_197.jpg
+1
+272 35 105 84 4
+23--Shoppers/23_Shoppers_Shoppers_23_223.jpg
+1
+296 249 51 81 4
+24--Soldier_Firing/24_Soldier_Firing_Soldier_Firing_24_10.jpg
+1
+105 148 32 58 3
+24--Soldier_Firing/24_Soldier_Firing_Soldier_Firing_24_1037.jpg
+1
+453 110 91 163 4
+24--Soldier_Firing/24_Soldier_Firing_Soldier_Firing_24_115.jpg
+1
+171 79 54 95 3
+24--Soldier_Firing/24_Soldier_Firing_Soldier_Firing_24_129.jpg
+1
+215 132 60 60 4
+24--Soldier_Firing/24_Soldier_Firing_Soldier_Firing_24_133.jpg
+2
+299 307 34 46 4
+342 380 22 58 2
+25--Soldier_Patrol/25_Soldier_Patrol_Soldier_Patrol_25_1026.jpg
+5
+126 208 26 44 4
+253 224 15 26 3
+366 215 10 24 3
+334 125 8 16 2
+362 131 5 10 1
+25--Soldier_Patrol/25_Soldier_Patrol_Soldier_Patrol_25_1029.jpg
+18
+159 345 36 64 4
+154 173 28 54 4
+94 193 35 54 4
+284 173 30 50 4
+322 371 24 56 3
+74 422 40 69 4
+379 287 25 37 4
+412 297 24 37 4
+343 315 22 35 4
+361 134 19 43 4
+308 175 24 43 4
+409 190 17 34 3
+446 179 26 41 4
+458 145 41 61 3
+545 162 27 45 3
+241 175 5 9 1
+272 155 4 9 1
+258 175 4 7 1
+25--Soldier_Patrol/25_Soldier_Patrol_Soldier_Patrol_25_1045.jpg
+2
+29 40 179 303 5
+411 31 184 363 5
+25--Soldier_Patrol/25_Soldier_Patrol_Soldier_Patrol_25_1046.jpg
+4
+157 242 16 24 3
+538 213 24 30 3
+468 242 20 24 3
+443 261 19 24 3
+25--Soldier_Patrol/25_Soldier_Patrol_Soldier_Patrol_25_121.jpg
+1
+430 68 36 68 4
+26--Soldier_Drilling/26_Soldier_Drilling_Soldiers_Drilling_26_149.jpg
+3
+148 206 57 109 5
+291 177 62 120 5
+474 221 62 111 5
+26--Soldier_Drilling/26_Soldier_Drilling_Soldiers_Drilling_26_178.jpg
+10
+547 146 67 204 5
+439 61 52 180 5
+346 114 55 159 5
+281 127 56 146 5
+215 186 50 122 5
+181 156 42 127 4
+116 162 42 98 4
+76 101 44 114 4
+400 135 46 127 5
+472 125 45 148 4
+26--Soldier_Drilling/26_Soldier_Drilling_Soldiers_Drilling_26_184.jpg
+1
+260 125 63 53 3
+26--Soldier_Drilling/26_Soldier_Drilling_Soldiers_Drilling_26_192.jpg
+6
+44 258 20 33 3
+56 349 17 28 3
+322 252 22 41 4
+359 306 20 32 3
+398 250 22 39 4
+352 278 12 26 3
+27--Spa/27_Spa_Spa_27_109.jpg
+2
+201 338 92 100 3
+117 296 71 60 2
+27--Spa/27_Spa_Spa_27_121.jpg
+2
+493 274 55 87 4
+80 61 44 89 4
+27--Spa/27_Spa_Spa_27_157.jpg
+1
+154 68 162 197 5
+27--Spa/27_Spa_Spa_27_168.jpg
+2
+285 318 34 56 4
+322 329 36 62 4
+27--Spa/27_Spa_Spa_27_212.jpg
+1
+157 78 291 240 5
+28--Sports_Fan/28_Sports_Fan_Sports_Fan_28_1018.jpg
+1
+237 59 157 85 4
+28--Sports_Fan/28_Sports_Fan_Sports_Fan_28_118.jpg
+12
+3 325 46 89 4
+302 285 58 111 4
+398 272 62 103 4
+444 174 19 52 2
+339 197 26 48 3
+8 178 47 73 4
+205 149 17 38 2
+30 73 19 32 2
+530 401 30 53 2
+59 114 20 28 2
+362 216 13 31 1
+289 115 29 54 1
+28--Sports_Fan/28_Sports_Fan_Sports_Fan_28_124.jpg
+1
+76 44 417 387 5
+28--Sports_Fan/28_Sports_Fan_Sports_Fan_28_126.jpg
+3
+194 240 46 80 4
+286 193 55 93 4
+259 350 45 75 4
+28--Sports_Fan/28_Sports_Fan_Sports_Fan_28_130.jpg
+1
+40 24 537 560 5
+29--Students_Schoolkids/29_Students_Schoolkids_Students_Schoolkids_29_10.jpg
+14
+285 271 11 21 3
+319 264 7 12 3
+348 259 9 15 3
+360 310 14 27 4
+327 347 15 28 4
+301 338 14 29 4
+290 306 12 24 4
+264 327 14 28 4
+412 339 14 29 4
+392 324 14 23 4
+328 295 10 19 4
+372 268 7 16 3
+302 275 9 19 3
+327 255 7 12 2
+29--Students_Schoolkids/29_Students_Schoolkids_Students_Schoolkids_29_126.jpg
+2
+7 7 247 298 5
+389 6 234 272 5
+29--Students_Schoolkids/29_Students_Schoolkids_Students_Schoolkids_29_130.jpg
+8
+66 223 30 46 3
+236 137 24 46 3
+329 202 23 33 3
+149 204 20 26 3
+202 171 7 16 2
+425 408 23 45 2
+383 348 27 55 2
+293 165 15 31 3
+29--Students_Schoolkids/29_Students_Schoolkids_Students_Schoolkids_29_132.jpg
+3
+20 11 117 180 5
+294 75 100 180 5
+458 148 89 174 5
+29--Students_Schoolkids/29_Students_Schoolkids_Students_Schoolkids_29_146.jpg
+3
+122 103 85 147 5
+373 140 69 116 5
+471 270 95 149 5
+3--Riot/3_Riot_Riot_3_101.jpg
+6
+350 231 29 61 2
+454 332 34 65 3
+556 225 35 65 3
+494 66 29 57 3
+266 291 31 53 2
+104 72 34 34 2
+3--Riot/3_Riot_Riot_3_106.jpg
+1
+418 109 121 133 4
+3--Riot/3_Riot_Riot_3_123.jpg
+1
+370 415 42 50 2
+30--Surgeons/30_Surgeons_Surgeons_30_107.jpg
+2
+164 183 149 101 3
+421 155 132 109 3
+30--Surgeons/30_Surgeons_Surgeons_30_115.jpg
+6
+49 218 27 48 2
+124 237 37 52 3
+194 236 44 77 3
+298 261 44 77 3
+350 176 54 69 3
+529 219 48 128 2
+30--Surgeons/30_Surgeons_Surgeons_30_122.jpg
+5
+160 227 15 39 2
+174 259 20 34 2
+326 244 25 38 2
+461 231 24 33 2
+532 366 20 25 2
+30--Surgeons/30_Surgeons_Surgeons_30_160.jpg
+3
+322 151 39 83 4
+494 222 36 53 4
+186 101 32 98 3
+30--Surgeons/30_Surgeons_Surgeons_30_256.jpg
+5
+419 395 72 115 3
+431 169 104 85 3
+272 29 76 102 3
+167 217 94 74 3
+201 368 91 120 3
+31--Waiter_Waitress/31_Waiter_Waitress_Waiter_Waitress_31_111.jpg
+2
+120 79 97 119 4
+431 47 77 114 4
+31--Waiter_Waitress/31_Waiter_Waitress_Waiter_Waitress_31_118.jpg
+1
+229 52 106 132 4
+31--Waiter_Waitress/31_Waiter_Waitress_Waiter_Waitress_31_162.jpg
+1
+283 156 152 150 4
+31--Waiter_Waitress/31_Waiter_Waitress_Waiter_Waitress_31_176.jpg
+1
+72 58 159 352 5
+31--Waiter_Waitress/31_Waiter_Waitress_Waiter_Waitress_31_188.jpg
+2
+357 161 60 67 4
+190 107 62 58 4
+32--Worker_Laborer/32_Worker_Laborer_Worker_Laborer_32_101.jpg
+3
+126 21 61 105 4
+360 92 57 118 4
+484 426 65 120 3
+32--Worker_Laborer/32_Worker_Laborer_Worker_Laborer_32_1038.jpg
+1
+269 85 74 62 3
+32--Worker_Laborer/32_Worker_Laborer_Worker_Laborer_32_1039.jpg
+1
+362 128 130 114 4
+32--Worker_Laborer/32_Worker_Laborer_Worker_Laborer_32_110.jpg
+7
+435 93 59 169 3
+306 563 26 66 3
+106 409 10 34 3
+127 235 11 23 2
+67 325 12 25 2
+284 20 12 44 3
+176 257 12 17 2
+32--Worker_Laborer/32_Worker_Laborer_Worker_Laborer_32_116.jpg
+1
+131 76 54 120 4
+33--Running/33_Running_Running_33_107.jpg
+3
+286 133 22 41 4
+374 157 20 38 4
+465 139 22 41 4
+33--Running/33_Running_Running_33_119.jpg
+3
+179 136 32 54 4
+346 120 29 61 4
+559 152 36 58 4
+33--Running/33_Running_Running_33_17.jpg
+1
+298 207 29 73 4
+33--Running/33_Running_Running_33_203.jpg
+1
+228 90 26 52 4
+33--Running/33_Running_Running_33_209.jpg
+1
+372 120 71 118 5
+34--Baseball/34_Baseball_Baseball_34_127.jpg
+1
+344 225 18 42 3
+34--Baseball/34_Baseball_Baseball_34_143.jpg
+5
+126 286 8 15 3
+41 132 4 8 2
+421 198 4 10 2
+107 67 2 4 1
+542 54 3 6 1
+34--Baseball/34_Baseball_Baseball_34_16.jpg
+1
+215 77 40 58 3
+34--Baseball/34_Baseball_Baseball_34_164.jpg
+4
+100 317 15 24 3
+184 297 10 15 3
+469 258 10 15 3
+512 234 9 13 2
+34--Baseball/34_Baseball_Baseball_34_171.jpg
+1
+262 72 59 87 4
+35--Basketball/35_Basketball_Basketball_35_158.jpg
+2
+123 192 75 72 4
+596 234 37 35 3
+35--Basketball/35_Basketball_Basketball_35_180.jpg
+11
+427 137 17 31 4
+258 331 21 40 4
+381 295 20 37 4
+137 145 20 33 4
+177 155 20 36 4
+210 157 16 32 4
+240 160 17 31 4
+275 148 17 31 4
+297 179 17 37 4
+330 129 17 32 4
+375 138 19 31 4
+35--Basketball/35_Basketball_Basketball_35_185.jpg
+4
+184 234 37 34 4
+445 254 32 49 3
+283 341 33 30 2
+379 386 12 16 2
+36--Football/36_Football_americanfootball_ball_36_1021.jpg
+2
+128 244 67 94 4
+270 153 50 73 4
+36--Football/36_Football_americanfootball_ball_36_111.jpg
+1
+291 57 81 61 4
+36--Football/36_Football_americanfootball_ball_36_114.jpg
+6
+452 75 43 59 4
+136 22 20 34 3
+376 14 20 31 3
+273 8 26 29 3
+27 19 24 30 3
+571 22 16 34 2
+36--Football/36_Football_americanfootball_ball_36_126.jpg
+8
+37 129 19 45 2
+212 153 19 43 2
+489 107 20 45 2
+327 280 20 43 2
+205 284 25 36 2
+422 87 22 40 2
+437 130 26 41 2
+401 209 26 39 2
+36--Football/36_Football_americanfootball_ball_36_132.jpg
+6
+69 194 31 44 3
+331 17 24 38 3
+495 74 23 34 3
+234 228 31 36 3
+488 210 30 42 3
+431 121 12 19 2
+37--Soccer/37_Soccer_Soccer_37_114.jpg
+2
+117 65 27 63 3
+289 185 30 79 4
+37--Soccer/37_Soccer_Soccer_37_170.jpg
+6
+590 50 42 71 4
+464 61 27 45 4
+387 70 48 79 4
+458 0 10 14 2
+376 1 15 26 3
+291 185 45 65 4
+37--Soccer/37_Soccer_Soccer_37_263.jpg
+1
+429 120 22 40 3
+37--Soccer/37_Soccer_Soccer_37_393.jpg
+4
+102 89 42 47 4
+205 110 58 62 4
+503 54 55 67 4
+361 19 33 36 4
+37--Soccer/37_Soccer_Soccer_37_394.jpg
+5
+365 115 12 25 4
+323 126 9 17 3
+563 86 15 30 4
+81 138 9 18 3
+0 152 10 21 2
+38--Tennis/38_Tennis_Tennis_38_128.jpg
+1
+332 84 84 118 5
+38--Tennis/38_Tennis_Tennis_38_131.jpg
+1
+137 73 119 198 5
+38--Tennis/38_Tennis_Tennis_38_142.jpg
+1
+300 149 19 42 4
+38--Tennis/38_Tennis_Tennis_38_18.jpg
+1
+181 100 37 75 4
+38--Tennis/38_Tennis_Tennis_38_182.jpg
+1
+157 83 105 195 5
+39--Ice_Skating/39_Ice_Skating_Ice_Skating_39_1026.jpg
+3
+174 108 50 86 4
+283 188 42 76 4
+408 61 44 65 4
+39--Ice_Skating/39_Ice_Skating_Ice_Skating_39_103.jpg
+7
+449 199 16 31 3
+259 155 19 35 4
+277 140 14 22 3
+210 140 10 16 2
+113 151 10 19 3
+142 178 10 16 3
+333 148 8 19 3
+39--Ice_Skating/39_Ice_Skating_Ice_Skating_39_1047.jpg
+28
+153 95 35 58 4
+467 120 34 63 4
+286 136 13 21 3
+332 110 12 22 3
+376 110 12 18 3
+368 164 13 24 3
+329 146 13 23 3
+312 166 12 26 3
+453 68 11 23 3
+508 62 15 28 3
+520 122 14 28 3
+547 147 17 26 3
+588 60 12 23 3
+551 33 12 22 3
+551 8 10 19 3
+504 24 11 18 3
+420 0 10 19 3
+461 2 13 23 3
+590 4 10 19 3
+4 14 9 15 3
+37 20 12 19 3
+76 19 11 17 3
+113 18 12 20 3
+152 16 12 21 3
+192 11 12 23 3
+632 67 8 22 2
+603 161 17 26 3
+584 123 15 25 2
+39--Ice_Skating/39_Ice_Skating_Ice_Skating_39_119.jpg
+2
+232 118 35 51 4
+348 149 32 45 4
+4--Dancing/4_Dancing_Dancing_4_21.jpg
+1
+452 114 46 76 4
+4--Dancing/4_Dancing_Dancing_4_41.jpg
+14
+341 96 27 72 3
+375 105 30 58 4
+12 380 13 25 3
+60 382 14 24 3
+93 377 12 22 3
+122 370 12 22 3
+159 364 9 21 3
+24 362 10 21 3
+81 357 9 20 3
+35 344 10 19 3
+64 333 10 20 3
+110 350 10 19 3
+142 350 10 19 3
+192 303 12 22 3
+4--Dancing/4_Dancing_Dancing_4_53.jpg
+4
+183 146 44 56 4
+62 149 51 83 4
+252 173 41 59 4
+360 201 37 66 4
+4--Dancing/4_Dancing_Dancing_4_57.jpg
+11
+349 128 20 49 3
+369 185 23 65 4
+457 147 15 32 3
+528 150 17 41 3
+510 151 11 29 3
+488 177 11 27 3
+592 187 12 24 3
+558 152 12 27 3
+482 157 15 30 3
+628 170 12 31 3
+606 121 12 26 3
+4--Dancing/4_Dancing_Dancing_4_84.jpg
+19
+83 152 29 49 4
+31 59 13 25 3
+94 68 10 20 3
+138 63 11 21 3
+170 118 12 19 3
+213 137 25 42 4
+299 121 22 36 4
+283 120 10 22 3
+333 169 22 47 4
+438 139 26 46 4
+531 94 25 42 4
+379 73 10 19 3
+458 59 14 22 3
+494 53 11 22 3
+53 128 11 20 3
+477 113 14 22 3
+422 0 10 13 2
+447 0 9 9 2
+587 180 12 26 3
+40--Gymnastics/40_Gymnastics_Gymnastics_40_1022.jpg
+1
+328 263 55 98 4
+40--Gymnastics/40_Gymnastics_Gymnastics_40_1035.jpg
+1
+284 80 56 111 5
+40--Gymnastics/40_Gymnastics_Gymnastics_40_1043.jpg
+10
+215 358 10 16 3
+237 359 10 18 2
+344 402 12 18 3
+346 350 10 16 3
+489 343 11 15 3
+551 358 11 16 3
+598 344 12 18 3
+524 386 11 10 3
+446 450 10 18 2
+329 264 11 8 3
+40--Gymnastics/40_Gymnastics_Gymnastics_40_1044.jpg
+1
+164 91 150 351 5
+40--Gymnastics/40_Gymnastics_Gymnastics_40_108.jpg
+1
+302 379 59 29 3
+41--Swimming/41_Swimming_Swimmer_41_1001.jpg
+1
+128 416 12 32 3
+41--Swimming/41_Swimming_Swimmer_41_1002.jpg
+1
+271 57 137 138 5
+41--Swimming/41_Swimming_Swimmer_41_1028.jpg
+1
+221 140 155 234 5
+41--Swimming/41_Swimming_Swimmer_41_113.jpg
+1
+48 175 87 56 4
+41--Swimming/41_Swimming_Swimmer_41_148.jpg
+1
+112 432 131 187 4
+42--Car_Racing/42_Car_Racing_Car_Racing_42_1045.jpg
+2
+245 207 96 186 5
+404 231 86 151 5
+42--Car_Racing/42_Car_Racing_Car_Racing_42_263.jpg
+5
+18 123 42 83 4
+250 171 26 54 4
+378 165 17 45 4
+501 117 26 49 4
+598 181 27 48 4
+42--Car_Racing/42_Car_Racing_Car_Racing_42_600.jpg
+7
+50 87 10 18 3
+119 120 5 10 2
+156 95 10 12 3
+188 126 5 8 2
+208 107 9 15 3
+223 122 7 11 2
+377 138 14 33 2
+42--Car_Racing/42_Car_Racing_Car_Racing_42_602.jpg
+8
+599 192 8 15 2
+514 143 5 7 1
+508 150 5 7 2
+53 147 4 8 1
+0 214 6 24 1
+84 148 3 5 1
+484 152 4 8 1
+188 144 2 6 1
+42--Car_Racing/42_Car_Racing_Car_Racing_42_743.jpg
+5
+378 80 12 25 3
+470 93 3 8 2
+439 105 3 10 1
+77 113 9 16 2
+60 109 7 12 2
+43--Row_Boat/43_Row_Boat_Canoe_43_1047.jpg
+1
+296 24 67 184 4
+43--Row_Boat/43_Row_Boat_Canoe_43_1048.jpg
+6
+130 242 35 80 4
+208 263 35 86 4
+272 314 33 74 4
+354 276 32 86 4
+417 297 32 76 4
+475 256 36 76 4
+43--Row_Boat/43_Row_Boat_Canoe_43_125.jpg
+3
+122 138 23 44 4
+263 176 22 39 4
+372 190 25 41 4
+43--Row_Boat/43_Row_Boat_Canoe_43_133.jpg
+1
+310 118 37 101 4
+43--Row_Boat/43_Row_Boat_Canoe_43_227.jpg
+2
+284 206 23 46 4
+402 215 24 46 4
+44--Aerobics/44_Aerobics_Aerobics_44_1032.jpg
+1
+230 105 177 185 5
+44--Aerobics/44_Aerobics_Aerobics_44_120.jpg
+1
+301 108 55 99 5
+44--Aerobics/44_Aerobics_Aerobics_44_127.jpg
+6
+491 208 21 46 3
+447 204 14 26 2
+383 238 12 25 3
+57 226 13 39 2
+125 238 8 26 2
+412 219 9 19 2
+44--Aerobics/44_Aerobics_Aerobics_44_167.jpg
+18
+552 260 40 72 4
+578 202 14 25 3
+599 217 9 14 2
+629 227 10 11 2
+495 226 24 41 4
+528 193 10 17 3
+550 219 7 11 2
+481 227 15 28 2
+467 205 9 14 3
+453 223 9 13 3
+427 223 12 24 3
+382 258 16 25 4
+359 207 10 15 3
+550 404 89 159 5
+234 234 19 33 4
+170 252 43 82 4
+237 221 12 20 2
+111 234 14 21 4
+44--Aerobics/44_Aerobics_Aerobics_44_173.jpg
+2
+399 122 89 151 5
+135 136 100 194 5
+45--Balloonist/45_Balloonist_Balloonist_45_1028.jpg
+2
+200 583 12 24 3
+521 475 10 26 1
+45--Balloonist/45_Balloonist_Balloonist_45_107.jpg
+3
+290 325 7 12 1
+349 325 9 13 2
+348 308 7 14 2
+45--Balloonist/45_Balloonist_Balloonist_45_118.jpg
+10
+127 316 36 103 3
+208 230 45 103 4
+280 294 33 84 3
+328 225 35 75 3
+447 97 45 98 4
+527 153 28 69 3
+95 26 7 20 1
+229 374 32 94 3
+272 241 27 61 2
+314 110 7 15 1
+45--Balloonist/45_Balloonist_Balloonist_45_134.jpg
+2
+211 53 32 63 4
+393 149 37 68 4
+45--Balloonist/45_Balloonist_Balloonist_45_142.jpg
+1
+97 132 105 86 4
+46--Jockey/46_Jockey_Jockey_46_106.jpg
+1
+263 121 54 131 5
+46--Jockey/46_Jockey_Jockey_46_130.jpg
+1
+351 67 42 78 3
+46--Jockey/46_Jockey_Jockey_46_166.jpg
+1
+261 87 57 56 4
+46--Jockey/46_Jockey_Jockey_46_172.jpg
+1
+519 142 69 137 5
+46--Jockey/46_Jockey_Jockey_46_188.jpg
+2
+216 55 30 61 4
+282 105 29 55 4
+47--Matador_Bullfighter/47_Matador_Bullfighter_Matador_Bullfighter_47_171.jpg
+1
+71 174 124 105 4
+47--Matador_Bullfighter/47_Matador_Bullfighter_Matador_Bullfighter_47_179.jpg
+1
+235 60 57 111 3
+47--Matador_Bullfighter/47_Matador_Bullfighter_Matador_Bullfighter_47_193.jpg
+1
+196 130 17 35 3
+47--Matador_Bullfighter/47_Matador_Bullfighter_Matador_Bullfighter_47_195.jpg
+5
+180 6 32 44 4
+559 188 42 72 4
+472 76 39 58 4
+439 85 30 61 4
+356 89 34 65 4
+47--Matador_Bullfighter/47_Matador_Bullfighter_Matador_Bullfighter_47_196.jpg
+1
+281 116 34 62 4
+48--Parachutist_Paratrooper/48_Parachutist_Paratrooper_Parachutist_Paratrooper_48_122.jpg
+1
+253 70 73 72 4
+48--Parachutist_Paratrooper/48_Parachutist_Paratrooper_Parachutist_Paratrooper_48_164.jpg
+1
+120 94 408 316 5
+48--Parachutist_Paratrooper/48_Parachutist_Paratrooper_Parachutist_Paratrooper_48_205.jpg
+1
+317 204 60 107 4
+48--Parachutist_Paratrooper/48_Parachutist_Paratrooper_Parachutist_Paratrooper_48_321.jpg
+3
+78 27 22 64 4
+219 36 15 57 3
+559 35 22 59 3
+49--Greeting/49_Greeting_peoplegreeting_49_10.jpg
+2
+172 74 55 131 4
+450 84 60 141 4
+49--Greeting/49_Greeting_peoplegreeting_49_124.jpg
+1
+306 255 40 87 4
+49--Greeting/49_Greeting_peoplegreeting_49_140.jpg
+5
+511 69 39 106 3
+436 76 44 95 4
+311 122 41 91 4
+182 107 46 96 4
+115 56 46 106 3
+49--Greeting/49_Greeting_peoplegreeting_49_153.jpg
+2
+188 65 134 198 3
+334 108 241 244 5
+49--Greeting/49_Greeting_peoplegreeting_49_162.jpg
+5
+147 20 41 146 3
+181 117 46 111 4
+302 135 45 93 4
+421 75 44 102 4
+503 69 44 124 3
+5--Car_Accident/5_Car_Accident_Accident_5_177.jpg
+17
+188 202 12 19 4
+245 198 11 22 4
+372 124 10 19 4
+435 188 12 24 3
+467 178 9 19 3
+521 207 14 23 4
+507 266 14 26 3
+543 243 12 26 3
+558 206 12 24 3
+549 174 9 23 3
+567 231 10 23 3
+609 203 12 26 3
+618 181 9 18 3
+565 156 8 17 3
+538 329 12 35 3
+519 315 9 22 2
+399 223 9 23 2
+5--Car_Accident/5_Car_Accident_Accident_5_202.jpg
+8
+473 94 9 20 3
+513 84 9 21 3
+560 92 9 19 2
+619 81 10 24 3
+443 99 5 9 2
+496 91 5 11 2
+464 100 11 24 3
+583 87 11 22 3
+5--Car_Accident/5_Car_Accident_Accident_5_34.jpg
+5
+328 58 10 16 2
+380 54 10 17 3
+432 43 12 20 3
+476 56 14 23 3
+59 66 7 10 1
+5--Car_Accident/5_Car_Accident_Accident_5_66.jpg
+9
+13 200 21 35 3
+165 118 4 6 1
+254 116 4 7 1
+286 120 3 7 1
+288 122 4 8 1
+306 122 4 7 1
+379 118 3 6 1
+420 123 4 6 1
+597 187 9 17 2
+50--Celebration_Or_Party/50_Celebration_Or_Party_birthdayparty_50_134.jpg
+16
+277 326 5 16 2
+262 324 5 15 2
+533 266 20 33 4
+499 281 6 7 2
+407 284 3 7 1
+452 279 5 10 2
+452 317 6 10 2
+394 321 5 11 2
+385 289 4 7 1
+374 312 5 12 2
+351 326 5 12 2
+317 317 3 7 1
+303 303 4 5 1
+345 295 4 7 1
+9 319 12 15 3
+51 333 9 16 3
+50--Celebration_Or_Party/50_Celebration_Or_Party_birthdayparty_50_144.jpg
+1
+191 185 92 126 5
+50--Celebration_Or_Party/50_Celebration_Or_Party_birthdayparty_50_170.jpg
+2
+435 88 25 37 4
+589 216 20 36 4
+50--Celebration_Or_Party/50_Celebration_Or_Party_birthdayparty_50_18.jpg
+15
+82 335 17 33 3
+145 313 15 25 4
+209 304 15 24 4
+243 305 14 24 3
+292 291 9 26 3
+340 294 12 17 4
+381 287 13 21 3
+399 284 12 17 4
+448 278 11 21 4
+504 288 11 19 4
+530 313 14 24 4
+477 333 11 24 3
+579 314 10 21 3
+416 333 10 22 3
+350 358 9 21 3
+50--Celebration_Or_Party/50_Celebration_Or_Party_birthdayparty_50_196.jpg
+1
+117 101 208 122 5
+51--Dresses/51_Dresses_wearingdress_51_1012.jpg
+8
+324 72 70 58 4
+76 194 21 19 2
+53 206 19 21 2
+25 213 22 18 2
+0 225 27 23 3
+105 196 20 16 2
+144 178 18 16 2
+157 186 16 16 2
+51--Dresses/51_Dresses_wearingdress_51_1031.jpg
+1
+274 35 105 74 4
+51--Dresses/51_Dresses_wearingdress_51_1035.jpg
+10
+534 179 59 82 4
+359 265 59 85 4
+256 49 51 103 4
+106 229 70 112 4
+458 27 12 21 3
+373 38 7 18 1
+402 33 10 21 1
+164 93 12 19 2
+180 52 10 19 3
+203 50 12 15 2
+51--Dresses/51_Dresses_wearingdress_51_1041.jpg
+1
+370 15 81 68 4
+51--Dresses/51_Dresses_wearingdress_51_105.jpg
+2
+202 40 92 93 4
+353 128 84 92 4
+52--Photographers/52_Photographers_photographertakingphoto_52_113.jpg
+1
+244 81 105 130 4
+52--Photographers/52_Photographers_photographertakingphoto_52_125.jpg
+1
+512 137 46 103 2
+52--Photographers/52_Photographers_photographertakingphoto_52_130.jpg
+3
+242 295 10 26 3
+304 324 8 16 2
+408 293 5 9 1
+52--Photographers/52_Photographers_photographertakingphoto_52_219.jpg
+7
+116 259 25 59 4
+188 319 26 58 4
+263 366 24 47 4
+353 329 25 51 4
+442 402 24 42 4
+412 265 27 52 4
+478 213 25 50 4
+52--Photographers/52_Photographers_photographertakingphoto_52_228.jpg
+6
+295 133 19 39 4
+332 178 20 34 4
+370 150 19 40 4
+216 141 20 43 4
+242 157 19 37 4
+484 76 20 62 3
+53--Raid/53_Raid_policeraid_53_107.jpg
+2
+143 85 21 48 3
+531 297 27 21 3
+53--Raid/53_Raid_policeraid_53_14.jpg
+4
+223 205 43 69 4
+340 245 28 54 3
+479 0 35 32 2
+315 0 25 35 4
+53--Raid/53_Raid_policeraid_53_171.jpg
+2
+276 52 72 135 4
+579 19 56 118 4
+53--Raid/53_Raid_policeraid_53_178.jpg
+2
+382 95 37 69 2
+555 220 18 29 3
+53--Raid/53_Raid_policeraid_53_207.jpg
+11
+77 122 14 45 3
+67 54 4 13 1
+40 57 3 11 1
+32 63 4 8 1
+91 49 5 13 1
+104 45 5 16 1
+123 45 4 10 1
+139 43 4 14 1
+165 39 4 14 1
+153 44 4 11 1
+77 57 4 10 1
+54--Rescue/54_Rescue_firemanrescue_54_103.jpg
+1
+274 70 77 68 4
+54--Rescue/54_Rescue_firemanrescue_54_153.jpg
+1
+164 107 65 142 3
+54--Rescue/54_Rescue_firemanrescue_54_327.jpg
+1
+204 125 215 428 5
+54--Rescue/54_Rescue_firemanrescue_54_420.jpg
+1
+260 127 162 228 5
+54--Rescue/54_Rescue_firemanrescue_54_458.jpg
+1
+100 166 109 155 4
+55--Sports_Coach_Trainer/55_Sports_Coach_Trainer_sportcoaching_55_1013.jpg
+1
+229 75 79 109 5
+55--Sports_Coach_Trainer/55_Sports_Coach_Trainer_sportcoaching_55_1015.jpg
+1
+190 63 364 343 5
+55--Sports_Coach_Trainer/55_Sports_Coach_Trainer_sportcoaching_55_1027.jpg
+1
+377 62 70 182 5
+55--Sports_Coach_Trainer/55_Sports_Coach_Trainer_sportcoaching_55_12.jpg
+1
+481 161 52 119 4
+55--Sports_Coach_Trainer/55_Sports_Coach_Trainer_sportcoaching_55_122.jpg
+35
+23 160 17 37 4
+18 206 14 30 4
+10 238 19 37 4
+36 351 22 41 4
+63 264 17 37 4
+75 257 14 28 4
+106 250 14 32 2
+116 269 14 30 4
+155 243 14 23 2
+164 256 12 35 4
+181 242 11 33 3
+215 265 15 43 4
+226 232 10 27 4
+242 247 14 29 3
+269 258 17 32 2
+286 292 14 33 4
+288 222 14 28 4
+327 245 14 30 4
+332 274 12 34 4
+353 287 14 33 4
+379 244 10 28 3
+396 251 11 34 4
+418 278 14 38 4
+435 263 14 35 3
+464 222 14 35 4
+462 259 15 37 4
+454 349 19 49 4
+509 254 15 39 4
+525 196 14 37 2
+545 216 15 35 4
+542 285 15 39 4
+545 374 22 44 4
+603 205 22 40 4
+484 258 16 34 2
+370 275 15 25 2
+56--Voter/56_Voter_peoplevoting_56_1011.jpg
+1
+193 178 242 212 5
+56--Voter/56_Voter_peoplevoting_56_103.jpg
+1
+285 135 274 233 5
+56--Voter/56_Voter_peoplevoting_56_1046.jpg
+1
+269 161 69 58 4
+56--Voter/56_Voter_peoplevoting_56_110.jpg
+5
+59 301 27 53 4
+130 290 18 48 3
+259 227 17 38 3
+506 242 9 18 2
+559 307 10 18 2
+56--Voter/56_Voter_peoplevoting_56_118.jpg
+6
+180 79 52 98 4
+62 3 42 57 4
+226 10 49 81 4
+355 98 36 96 3
+285 5 18 51 3
+512 0 26 46 3
+57--Angler/57_Angler_peoplefishing_57_1009.jpg
+7
+51 101 44 69 4
+137 139 46 69 4
+214 143 49 96 4
+286 92 36 67 4
+339 153 41 79 4
+428 140 44 81 4
+532 129 46 79 4
+57--Angler/57_Angler_peoplefishing_57_1012.jpg
+3
+138 267 44 56 4
+248 131 64 93 4
+395 178 70 106 4
+57--Angler/57_Angler_peoplefishing_57_104.jpg
+2
+496 327 17 29 3
+237 402 14 28 1
+57--Angler/57_Angler_peoplefishing_57_110.jpg
+2
+404 323 9 15 2
+173 321 9 16 2
+57--Angler/57_Angler_peoplefishing_57_120.jpg
+2
+297 159 38 24 2
+155 73 10 9 1
+58--Hockey/58_Hockey_icehockey_puck_58_113.jpg
+19
+322 53 30 47 4
+193 118 32 54 4
+50 38 19 27 3
+226 41 14 24 3
+246 42 12 23 3
+270 43 9 21 2
+170 36 15 23 3
+140 41 12 16 3
+116 41 11 15 3
+4 25 10 19 2
+306 53 11 19 3
+192 44 13 19 3
+412 54 14 20 3
+526 5 15 20 2
+596 8 15 23 2
+621 92 18 37 3
+78 42 9 15 2
+277 43 9 19 2
+154 18 6 13 1
+58--Hockey/58_Hockey_icehockey_puck_58_118.jpg
+2
+112 74 37 69 4
+371 121 42 69 4
+58--Hockey/58_Hockey_icehockey_puck_58_17.jpg
+10
+42 93 39 70 4
+278 487 15 35 3
+103 499 28 46 4
+172 453 13 25 3
+339 448 12 25 3
+234 238 11 22 2
+193 359 15 17 2
+120 464 9 14 2
+534 63 33 70 4
+10 308 57 119 4
+58--Hockey/58_Hockey_icehockey_puck_58_182.jpg
+4
+381 147 30 56 4
+237 157 30 60 4
+391 91 16 31 3
+511 112 21 39 3
+58--Hockey/58_Hockey_icehockey_puck_58_184.jpg
+1
+350 245 34 59 4
+59--people--driving--car/59_peopledrivingcar_peopledrivingcar_59_1014.jpg
+1
+31 34 35 48 3
+59--people--driving--car/59_peopledrivingcar_peopledrivingcar_59_1019.jpg
+4
+57 381 13 18 3
+75 387 11 16 2
+600 357 15 23 3
+188 346 12 24 3
+59--people--driving--car/59_peopledrivingcar_peopledrivingcar_59_1020.jpg
+2
+230 4 74 115 3
+316 122 76 188 4
+59--people--driving--car/59_peopledrivingcar_peopledrivingcar_59_1038.jpg
+1
+132 12 392 335 5
+59--people--driving--car/59_peopledrivingcar_peopledrivingcar_59_117.jpg
+1
+127 110 96 227 4
+6--Funeral/6_Funeral_Funeral_6_109.jpg
+36
+75 201 19 37 4
+121 202 19 34 4
+154 208 17 32 4
+167 211 13 30 3
+188 188 14 24 3
+189 213 16 29 4
+220 212 17 29 4
+229 193 14 27 3
+256 193 13 22 4
+263 223 15 27 4
+286 209 14 29 4
+305 204 10 20 4
+307 219 8 18 3
+312 217 9 18 3
+304 236 11 15 4
+325 216 10 23 4
+342 206 12 21 4
+355 201 9 20 3
+243 291 16 36 4
+282 280 15 27 4
+367 211 14 28 4
+350 222 9 14 3
+385 207 12 22 4
+402 206 13 22 4
+370 280 15 29 4
+357 302 13 25 4
+435 233 11 20 4
+447 236 10 19 3
+462 237 12 19 3
+485 216 12 19 3
+500 238 12 20 4
+519 225 12 17 4
+446 277 15 25 4
+411 279 13 24 4
+550 218 12 21 4
+571 207 13 21 4
+6--Funeral/6_Funeral_Funeral_6_128.jpg
+12
+537 67 30 49 4
+496 73 21 39 4
+493 72 15 30 2
+468 116 15 29 4
+282 82 25 40 4
+303 78 15 43 4
+332 76 17 33 4
+397 93 20 38 4
+70 98 24 43 4
+107 65 23 47 4
+134 54 19 39 4
+179 100 21 35 4
+6--Funeral/6_Funeral_Funeral_6_140.jpg
+11
+586 72 12 27 3
+550 43 13 27 3
+516 40 13 27 3
+482 13 9 17 2
+313 207 35 58 4
+557 236 7 13 1
+238 151 5 7 1
+120 0 78 129 4
+51 91 35 72 4
+117 607 44 31 1
+189 22 10 14 2
+6--Funeral/6_Funeral_Funeral_6_160.jpg
+24
+0 53 29 59 3
+21 30 35 42 3
+11 92 39 44 4
+55 79 27 25 2
+94 89 40 37 4
+87 73 24 19 2
+124 74 39 36 4
+163 86 27 27 3
+177 76 23 29 3
+224 91 19 18 3
+223 125 29 25 4
+248 108 7 7 1
+383 155 24 22 4
+450 65 24 23 4
+450 77 20 27 3
+469 69 27 32 3
+489 84 29 33 4
+544 102 40 37 4
+539 85 33 29 3
+520 52 30 28 4
+560 40 38 32 4
+622 22 17 57 3
+339 122 8 8 1
+331 122 9 8 1
+61--Street_Battle/61_Street_Battle_streetfight_61_12.jpg
+9
+4 122 50 80 4
+57 187 24 41 4
+97 206 19 29 4
+139 216 20 33 4
+255 169 44 77 4
+164 236 15 24 3
+378 132 41 76 4
+461 92 42 88 3
+310 182 20 31 4
+61--Street_Battle/61_Street_Battle_streetfight_61_123.jpg
+2
+478 126 79 231 3
+120 137 76 173 4
+61--Street_Battle/61_Street_Battle_streetfight_61_155.jpg
+2
+197 232 25 53 3
+443 258 30 43 3
+61--Street_Battle/61_Street_Battle_streetfight_61_158.jpg
+6
+383 152 57 79 4
+468 136 16 26 3
+545 155 19 52 3
+219 317 37 35 2
+247 358 50 54 3
+191 233 22 21 2
+61--Street_Battle/61_Street_Battle_streetfight_61_162.jpg
+10
+24 412 36 37 4
+333 236 37 78 4
+394 251 25 43 4
+485 223 20 55 3
+512 118 58 121 4
+192 177 4 7 1
+151 384 5 9 1
+192 310 3 6 1
+196 309 2 5 1
+141 102 7 12 1
+7--Cheering/7_Cheering_Cheering_7_118.jpg
+6
+19 284 60 127 4
+184 233 59 117 4
+259 235 55 121 4
+356 249 55 131 4
+487 225 57 133 4
+551 296 65 147 4
+7--Cheering/7_Cheering_Cheering_7_125.jpg
+5
+135 76 56 113 4
+201 149 54 102 4
+283 113 44 95 4
+333 161 44 88 4
+391 125 42 102 4
+7--Cheering/7_Cheering_Cheering_7_57.jpg
+16
+19 129 23 41 4
+0 239 30 52 4
+67 258 14 34 2
+83 239 27 41 4
+153 275 25 41 2
+206 248 25 43 4
+243 177 24 36 2
+270 269 27 48 4
+347 276 27 41 4
+414 250 26 36 4
+459 115 27 40 4
+496 227 33 44 4
+467 269 24 45 4
+624 266 15 57 3
+597 270 18 40 2
+599 304 18 41 2
+7--Cheering/7_Cheering_Cheering_7_60.jpg
+4
+159 135 55 93 4
+273 136 44 90 4
+374 17 46 100 4
+438 129 55 103 4
+8--Election_Campain/8_Election_Campain_Election_Campaign_8_25.jpg
+1
+369 144 112 225 5
+8--Election_Campain/8_Election_Campain_Election_Campaign_8_32.jpg
+17
+618 290 14 32 3
+594 317 17 27 4
+570 302 20 52 3
+597 296 13 29 3
+544 333 16 31 4
+492 338 17 32 4
+451 321 15 32 4
+414 320 16 32 4
+383 339 15 29 4
+349 352 15 31 4
+292 325 16 33 4
+226 333 15 32 4
+200 337 15 32 4
+264 381 12 23 3
+138 305 17 31 4
+67 279 18 33 4
+19 303 17 34 3
+8--Election_Campain/8_Election_Campain_Election_Campaign_8_69.jpg
+1
+72 112 94 197 5
+8--Election_Campain/8_Election_Campain_Election_Campaign_8_76.jpg
+29
+525 229 25 37 4
+487 244 22 32 4
+444 262 19 27 4
+443 194 18 27 4
+428 246 20 32 4
+401 196 20 29 4
+345 218 20 32 4
+361 205 17 27 2
+377 185 20 30 2
+320 209 23 33 4
+320 189 19 27 2
+242 198 18 28 3
+277 192 21 31 4
+253 197 18 28 2
+260 235 20 33 4
+214 251 22 32 4
+185 187 19 28 3
+159 238 21 37 4
+166 230 20 32 2
+129 196 19 29 3
+204 188 18 29 3
+129 256 24 33 3
+162 201 16 24 2
+94 253 24 37 4
+43 261 24 37 4
+13 245 25 37 4
+384 229 20 35 4
+349 186 12 28 2
+222 195 19 28 4
+9--Press_Conference/9_Press_Conference_Press_Conference_9_34.jpg
+1
+160 137 255 223 5
+--/

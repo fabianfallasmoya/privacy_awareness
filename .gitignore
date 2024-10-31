@@ -132,6 +132,12 @@ dmypy.json
 #datasets/
 runs/
 wandb/
+*/data/widerface/val/images/
+*/widerface_evaluate/widerface_txt/
+retina-face/results/
+retina-face/widerface_evaluate/box_overlaps.c
+*.patch
+*.bk
 
 .DS_Store
 
