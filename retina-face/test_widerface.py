@@ -4,6 +4,7 @@ import argparse
 import torch
 import torch.backends.cudnn as cudnn
 import numpy as np
+from sklearn.cluster import DBSCAN
 from data import cfg_mnet, cfg_re50
 from layers.functions.prior_box import PriorBox
 from utils.nms.py_cpu_nms import py_cpu_nms
@@ -65,6 +66,97 @@ def load_model(model, pretrained_path, load_to_cpu):
     model.load_state_dict(pretrained_dict, strict=False)
     return model
 
+def calculate_bbox_size(detections):
+        # Calculate the width and height of each box
+        width = torch.abs(detections[:, 2] - detections[:, 0])  # |x2 - x1|
+        height = torch.abs(detections[:, 3] - detections[:, 1])  # |y2 - y1|
+        # Calculate the normlized area for 640x640 pixels images
+        area = width * height / 409600
+        return area
+
+def sigmoid(x, threshold=0.1, alpha=10):
+    return 1 / (1 + torch.exp(-alpha * (x - threshold)))
+
+def get_landmark_score(detections, alpha=0.1):
+    """
+    Clusters landmarks within a bounding box if they are too close to each other
+    based on an alpha distance proportional to the size of the bounding box.
+
+    Parameters:
+    detections: tensor with predictions
+    alpha : float
+        Proportion of the bounding box size to use as the clustering distance.
+
+    Returns:
+    tensor
+        Tensor with the landmark scores base on how many clusters were detected.
+    """
+    # Calculate width and height of the bounding box
+    bbox_width = torch.abs(detections[:, 2] - detections[:, 0])  # |x2 - x1|
+    bbox_height = torch.abs(detections[:, 3] - detections[:, 1])  # |y2 - y1|
+
+    # Calculate the clustering distance as alpha times the average bbox size
+    clustering_distance = alpha * (bbox_width + bbox_height) / 2
+
+    # Convert points to numpy array for DBSCAN
+    points_array = np.array(detections[:, 5:15])
+
+    results = torch.zeros(clustering_distance.shape[0])
+
+    for i in range(results.size(0)):
+        # Apply DBSCAN clustering with calculated epsilon
+        dbscan = DBSCAN(eps=clustering_distance[i].tolist(), min_samples=1)
+        labels = dbscan.fit_predict(points_array[i].reshape(-1,2))
+
+        # Count the number of unique clusters
+        num_clusters = len(set(labels))
+
+        match num_clusters:
+            case 1:
+                results[i] = 0
+            case 2:
+                results[i] = 0.25
+            case 3:
+                results[i] = 0.5
+            case 4:
+                results[i] = 0.75
+            case 5:
+                results[i] = 1
+            case _:
+                results[i] = 0
+    return results
+
+def calculate_pa_sigmoid(detections):
+    """
+    Calculate Privacy Awareness using conf score, bbox size and landmarks num
+
+    Params:
+        detections (x1,y1,x2,y2,cs,lm1x,lm1y,lm2x,lm2y,lm3x,lm3y,lm4x,lm4y,lm5x,lm5y)
+    Returns:
+        array_with_pa (x1,y1,x2,y2,cs,lm1x,lm1y,lm2x,lm2y,lm3x,lm3y,lm4x,lm4y,lm5x,lm5y, pa, pa_discret)
+    """
+
+    # Convert detections to a PyTorch tensor
+    detections = torch.tensor(detections)
+
+    # first calculate the bbox size
+    area = calculate_bbox_size(detections)
+
+    # then define sigmoid parameters
+    alpha = 40
+    threshold = 0.001
+
+    # Calculate the PA using the weights formula
+    pa = 0.3 * detections[:, 4] + 0.3 * sigmoid(area, threshold=threshold, alpha=alpha) + 0.4 * get_landmark_score(detections)
+    # Add the Privacy Awareness as an extra column
+    array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
+
+    # now classify continuous PA value into PA interval i.e. 0.73 -> 0.8
+    pa_intervals = torch.ceil(pa / 0.2) * 0.2
+
+    array_with_pa = torch.cat((array_with_pa, pa_intervals.unsqueeze(1)), dim=1)
+
+    return array_with_pa.numpy()
 
 if __name__ == '__main__':
     torch.set_grad_enabled(False)
@@ -170,13 +262,16 @@ if __name__ == '__main__':
         dets = np.concatenate((dets, landms), axis=1)
         _t['misc'].toc()
 
+        # Calculate PA
+        dets_pa = calculate_pa_sigmoid(dets)
+
         # --------------------------------------------------------------------
         save_name = args.save_folder + img_name[:-4] + ".txt"
         dirname = os.path.dirname(save_name)
         if not os.path.isdir(dirname):
             os.makedirs(dirname)
         with open(save_name, "w") as fd:
-            bboxs = dets
+            bboxs = dets_pa
             file_name = os.path.basename(save_name)[:-4] + "\n"
             bboxs_num = str(len(bboxs)) + "\n"
             fd.write(file_name)
@@ -187,17 +282,19 @@ if __name__ == '__main__':
                 w = int(box[2]) - int(box[0])
                 h = int(box[3]) - int(box[1])
                 confidence = str(box[4])
-                line = str(x) + " " + str(y) + " " + str(w) + " " + str(h) + " " + confidence + " \n"
+                pa = str(box[16])
+                line = str(x) + " " + str(y) + " " + str(w) + " " + str(h) + " " + confidence + " " + pa + " \n"
                 fd.write(line)
 
         print('im_detect: {:d}/{:d} forward_pass_time: {:.4f}s misc: {:.4f}s'.format(i + 1, num_images, _t['forward_pass'].average_time, _t['misc'].average_time))
 
         # save image
         if args.save_image:
-            for b in dets:
+            for b in dets_pa:
                 if b[4] < args.vis_thres:
                     continue
-                text = "{:.4f}".format(b[4])
+                #text = "{:.4f}".format(b[4])
+                text = str(b[16])
                 b = list(map(int, b))
                 cv2.rectangle(img_raw, (b[0], b[1]), (b[2], b[3]), (0, 0, 255), 2)
                 cx = b[0]
