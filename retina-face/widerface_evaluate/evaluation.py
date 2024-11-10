@@ -78,6 +78,11 @@ def get_gt_boxes_from_txt(gt_path, cache_dir):
     f.close()
     return boxes
 
+def normalize_pa_labels(labels):
+        # Transform PA range from [1,5] to [0,1]
+        labels[4] = labels[4] / 5
+        return labels
+
 def get_gt_boxes_from_txt2(gt_path):
 
     f = open(gt_path, 'r')
@@ -114,7 +119,7 @@ def get_gt_boxes_from_txt2(gt_path):
 
         if state == 2 and '--' in line:
             state = 1
-            current_file.append([np.array(current_boxes).astype('int32')])
+            current_file.append([np.array(current_boxes).astype('float')])
             current_boxes = []
             if line.split('/')[0] != current_event_name:
                 current_event_name = line.split('/')[0]
@@ -128,8 +133,8 @@ def get_gt_boxes_from_txt2(gt_path):
             continue
 
         if state == 2:
-            box = [float(x) for x in line.split(' ')[:4]]
-            current_boxes.append(box)
+            box = [float(x) for x in line.split(' ')[:5]]
+            current_boxes.append(normalize_pa_labels(box))
             continue
 
     total_gt_boxes = np.array(current_events, dtype=object)
@@ -167,7 +172,7 @@ def read_pred_file(filepath):
         if line[0] is '':
             continue
         # a = float(line[4])
-        boxes.append([float(line[0]), float(line[1]), float(line[2]), float(line[3]), float(line[4])])
+        boxes.append([float(line[0]), float(line[1]), float(line[2]), float(line[3]), float(line[4]), float(line[5])])
     boxes = np.array(boxes)
     # boxes = np.array(list(map(lambda x: [float(a) for a in x.rstrip('\r\n').split(' ')], lines))).astype('float')
     return img_file.split('/')[-1], boxes
@@ -202,8 +207,8 @@ def norm_score(pred):
         for _, v in k.items():
             if len(v) == 0:
                 continue
-            _min = np.min(v[:, -1])
-            _max = np.max(v[:, -1])
+            _min = np.min(v[:, 4])
+            _max = np.max(v[:, 4])
             max_score = max(_max, max_score)
             min_score = min(_min, min_score)
 
@@ -212,7 +217,7 @@ def norm_score(pred):
         for _, v in k.items():
             if len(v) == 0:
                 continue
-            v[:, -1] = (v[:, -1] - min_score)/diff
+            v[:, 4] = (v[:, 4] - min_score)/diff
 
 
 def image_eval(pred, gt, ignore, iou_thresh):
@@ -239,7 +244,8 @@ def image_eval(pred, gt, ignore, iou_thresh):
 
         gt_overlap = overlaps[h]
         max_overlap, max_idx = gt_overlap.max(), gt_overlap.argmax()
-        if max_overlap >= iou_thresh:
+        #if max_overlap >= iou_thresh:
+        if (max_overlap >= iou_thresh) and (_pred[h, 5] == _gt[max_idx, 4]):
             if ignore[max_idx] == 0:
                 recall_list[max_idx] = -1
                 proposal_list[h] = -1

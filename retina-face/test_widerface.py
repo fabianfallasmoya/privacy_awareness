@@ -115,11 +115,11 @@ def get_landmark_score(detections, alpha=0.1):
             case 1:
                 results[i] = 0
             case 2:
-                results[i] = 0.25
+                results[i] = 0.1
             case 3:
-                results[i] = 0.5
+                results[i] = 0.25
             case 4:
-                results[i] = 0.75
+                results[i] = 0.5
             case 5:
                 results[i] = 1
             case _:
@@ -143,11 +143,11 @@ def calculate_pa_sigmoid(detections):
     area = calculate_bbox_size(detections)
 
     # then define sigmoid parameters
-    alpha = 40
-    threshold = 0.001
+    alpha = 25
+    threshold = 0.1
 
     # Calculate the PA using the weights formula
-    pa = 0.3 * detections[:, 4] + 0.3 * sigmoid(area, threshold=threshold, alpha=alpha) + 0.4 * get_landmark_score(detections)
+    pa = 0.3 * detections[:, 4] + 0.4 * sigmoid(area, threshold=threshold, alpha=alpha) + 0.3 * get_landmark_score(detections)
     # Add the Privacy Awareness as an extra column
     array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
 
@@ -157,6 +157,50 @@ def calculate_pa_sigmoid(detections):
     array_with_pa = torch.cat((array_with_pa, pa_intervals.unsqueeze(1)), dim=1)
 
     return array_with_pa.numpy()
+
+def exponentialBoostTransform(x, threshold=0.1, alpha=10):
+    # x in the proper range [0, 1]
+    x = torch.clip(x, 0, 1)
+
+    # a threshold based transformation
+    #
+    # 1 - np.exp(-alpha * (x - threshold)) is a decreasing exponential function.
+    # when x is equal to the threshold, the function equals 0, and as x increases,
+    # the function approaches 1 asymptotically (np.maximum is to stabilize the results).
+    return torch.where(x > threshold,
+                    torch.maximum(1 - torch.exp(-alpha * (x - threshold)), x),
+                    x)
+
+def calculate_pa_expBoost(detections):
+        """
+        Calculate Privacy Awareness using conf score, bbox size and landmarks num
+
+        Params:
+            detections (x1,y1,x2,y2,cs,lm1x,lm1y,lm2x,lm2y,lm3x,lm3y,lm4x,lm4y,lm5x,lm5y)
+        Returns:
+            array_with_pa (x1,y1,x2,y2,cs,lm1x,lm1y,lm2x,lm2y,lm3x,lm3y,lm4x,lm4y,lm5x,lm5y, pa, pa_discret)
+        """
+        # Convert detections to a PyTorch tensor
+        detections = torch.tensor(detections)
+
+        # first calculate the bbox size
+        area = calculate_bbox_size(detections)
+
+        # then define sigmoid parameters
+        alpha = 30
+        threshold = 0.0001
+
+        # Calculate the PA using the weights formula
+        pa = 0.3 * detections[:, 4] + 0.4 * exponentialBoostTransform(area, threshold=threshold, alpha=alpha) + 0.3 * get_landmark_score(detections)
+        # Add the Privacy Awareness as an extra column
+        array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
+
+        # now classify continuous PA value into PA interval i.e. 0.73 -> 0.8
+        pa_intervals = torch.ceil(pa / 0.2) * 0.2
+
+        array_with_pa = torch.cat((array_with_pa, pa_intervals.unsqueeze(1)), dim=1)
+
+        return array_with_pa.numpy()
 
 if __name__ == '__main__':
     torch.set_grad_enabled(False)
@@ -263,7 +307,8 @@ if __name__ == '__main__':
         _t['misc'].toc()
 
         # Calculate PA
-        dets_pa = calculate_pa_sigmoid(dets)
+        # dets_pa = calculate_pa_sigmoid(dets)
+        dets_pa = calculate_pa_expBoost(dets)
 
         # --------------------------------------------------------------------
         save_name = args.save_folder + img_name[:-4] + ".txt"
@@ -282,8 +327,18 @@ if __name__ == '__main__':
                 w = int(box[2]) - int(box[0])
                 h = int(box[3]) - int(box[1])
                 confidence = str(box[4])
+                lm1x = int(box[5])
+                lm1y = int(box[6])
+                lm2x = int(box[7])
+                lm2y = int(box[8])
+                lm3x = int(box[9])
+                lm3y = int(box[10])
+                lm4x = int(box[11])
+                lm4y = int(box[12])
+                lm5x = int(box[13])
+                lm5y = int(box[14])
                 pa = str(box[16])
-                line = str(x) + " " + str(y) + " " + str(w) + " " + str(h) + " " + confidence + " " + pa + " \n"
+                line = str(x) + " " + str(y) + " " + str(w) + " " + str(h) + " " + confidence + " " + pa + " " + str(lm1x) + " " + str(lm1y) + " " + str(lm2x) + " " + str(lm2y) + " " + str(lm3x) + " " + str(lm3y) + " " + str(lm4x) + " " + str(lm4y) + " " + str(lm5x) + " " + str(lm5y) + " \n"
                 fd.write(line)
 
         print('im_detect: {:d}/{:d} forward_pass_time: {:.4f}s misc: {:.4f}s'.format(i + 1, num_images, _t['forward_pass'].average_time, _t['misc'].average_time))
