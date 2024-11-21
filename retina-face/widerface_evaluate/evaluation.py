@@ -172,7 +172,7 @@ def read_pred_file(filepath):
         if line[0] is '':
             continue
         # a = float(line[4])
-        boxes.append([float(line[0]), float(line[1]), float(line[2]), float(line[3]), float(line[4]), float(line[5])])
+        boxes.append([float(line[0]), float(line[1]), float(line[2]), float(line[3]), float(line[4]), float(line[5]), float(line[6])])
     boxes = np.array(boxes)
     # boxes = np.array(list(map(lambda x: [float(a) for a in x.rstrip('\r\n').split(' ')], lines))).astype('float')
     return img_file.split('/')[-1], boxes
@@ -262,7 +262,7 @@ def img_pr_info(thresh_num, pred_info, proposal_list, pred_recall):
     for t in range(thresh_num):
 
         thresh = 1 - (t+1)/thresh_num
-        r_index = np.where(pred_info[:, 4] >= thresh)[0]
+        r_index = np.where(pred_info[:, 6] >= thresh)[0]
         if len(r_index) == 0:
             pr_info[t, 0] = 0
             pr_info[t, 1] = 0
