@@ -2,13 +2,16 @@
 
 import os
 from pathlib import Path
+from PIL import Image
 
 import numpy as np
 import torch
+import torchvision.transforms as transforms
 
 from ultralytics.yolo.data import build_dataloader
 from ultralytics.yolo.data.dataloaders.v5loader import create_dataloader
 from ultralytics.yolo.engine.validator import BaseValidator
+from ultralytics.yolo.engine.fewshot import create_model
 from ultralytics.yolo.utils import DEFAULT_CFG, colorstr, ops, yaml_load
 from ultralytics.yolo.utils.checks import check_file, check_requirements
 from ultralytics.yolo.utils.metrics import ConfusionMatrix, DetMetrics, box_iou
@@ -27,6 +30,8 @@ class DetectionValidator(BaseValidator):
         self.metrics = DetMetrics(save_dir=self.save_dir)
         self.iouv = torch.linspace(0.5, 0.95, 10)  # iou vector for mAP@0.5:0.95
         self.niou = self.iouv.numel()
+        self.fewshot_model = create_model()
+
 
     def preprocess(self, batch):
         batch["img"] = batch["img"].to(self.device, non_blocking=True)
@@ -104,7 +109,7 @@ class DetectionValidator(BaseValidator):
                                 ratio_pad=batch["ratio_pad"][si])  # native-space labels
                 labelsn = torch.cat((cls, tbox, pa), 1)  # native-space labels
                 correct_bboxes = self._process_batch(predn, labelsn)
-                correct_bboxes_pa, pred_pa = self._process_batch_pa(predn, labelsn)
+                correct_bboxes_pa, pred_pa = self._process_batch_pa(predn, labelsn, batch["img"][si])
                 # TODO: maybe remove these `self.` arguments as they already are member variable
                 if self.args.plots:
                     self.confusion_matrix.process_batch(predn, labelsn)
@@ -263,12 +268,96 @@ class DetectionValidator(BaseValidator):
 
         return array_with_pa
 
-    def normalize_pa_labels(self, labels):
-        # Transform PA range from [1,5] to [0,1]
+    def crop_image(self, tensor, detections):
+        """
+        Crop an RGB image from a given pytorch tensor based on a series of coordinates
+        and store the cropped images in a list.
+
+        Args:
+            tensor (pytorch tensor): The input Image tensor.
+            detections (list of detections): A pytorch tensor with the detections info
+
+        Returns:
+            list: A list of cropped images (Pillow Image objects).
+        """
+        tensor = tensor.cpu()
+
+            # Convert tensor to a PIL Image (ensure the tensor is in [H, W, C] format)
+        if tensor.ndimension() == 3 and tensor.shape[0] == 3:  # [C, H, W] format
+            tensor = tensor.permute(1, 2, 0)  # Rearrange to [H, W, C]
+
+        # Convert to a NumPy array and then to a PIL Image
+        image = Image.fromarray((tensor.numpy() * 255).astype('uint8'))
+
+        cropped_images = []
+        for coord in detections:
+            cropped_image = image.crop((int(coord[0]), int(coord[1]), int(coord[2]), int(coord[3])))  # Crop the image
+            cropped_images.append(cropped_image)
+
+        # for idx, cropped_image in enumerate(cropped_images):
+        #     cropped_image.show()  # Opens the image in the default image viewer
+
+        return cropped_images
+
+    def get_few_shot_confidence_score(self, cropped_images):
+        # init few shot confidence score
+        score = torch.empty(len(cropped_images), dtype=torch.float32)
+
+        # Setup transform to go from PIL image to tensor
+        transform = transforms.ToTensor()
+
+        # get the few shot confidence score for each image
+        for idx, img in enumerate(cropped_images):
+            tensor_image = transform(img)
+            _, H, W = tensor_image.shape  # Unpack shape: (C, H, W)
+            # Check if either dimension is smaller than 7, since the image can't be smaller than the model kernel 7x7
+            if H < 7 or W < 7:
+                score[idx] = -100
+            else:
+                # Convert single image tensor to a batch (batch size = 1)
+                tensor_image = tensor_image.unsqueeze(0)  # Shape changes from [C, H, W] -> [1, C, H, W]
+                few_shot_score = self.fewshot_model(
+                    tensor_image.to("cuda", dtype=torch.float32)
+                ).detach()
+                score[idx] = few_shot_score.data[0]
+
+        # normalize the confidence score
+        score = score.to("cuda")
+        min_val, max_val = -28, -16
+        # Apply min-max normalization
+        normalized = (score - min_val) / (max_val - min_val)
+
+        # Clamp values to the range [0, 1]
+        normalized = torch.clamp(normalized, 0, 1)
+
+        return normalized
+
+
+    def calculate_pa_5_sigmoid(self, detections, img):
+        # first calculate the bbox size
+        area = self.calculate_bbox_size(detections)
+
+        # second, create the cropped image vector based on the detections and the batch image
+        cropped_images = self.crop_image(img, detections)
+
+        # then define sigmoid parameters
+        alpha = 40
+        threshold = 0.001
+
+        # Calculate the PA using the weights formula
+        pa = 0.3 * detections[:, 4] + 0.3 * self.sigmoid(area, threshold=threshold, alpha=alpha) + 0.4 * self.get_few_shot_confidence_score(cropped_images)
+        # Add the Privacy Awareness as an extra column
+        array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
+
+        # now classify continuous PA value into PA interval i.e. 0.73 -> 0.8
+        pa_intervals = torch.ceil(pa / 0.2) * 0.2
+
+        array_with_pa = torch.cat((array_with_pa, pa_intervals.unsqueeze(1)), dim=1)
+
         labels[:, 5] = labels[:, 5] / 5
         return labels
 
-    def _process_batch_pa(self, detections, labels):
+    def _process_batch_pa(self, detections, labels, img):
         """
         Return correct prediction matrix for Privacy Awareness
         Arguments:
@@ -293,6 +382,13 @@ class DetectionValidator(BaseValidator):
                 #detections_pa = self.calculate_pa_1(detections)
                 detections_pa = self.calculate_pa_1_sigmoid(detections)
                 #detections_pa = self.calculate_pa_1_expBoost(detections)
+
+                correct_pa = labels_pa[:, 5:6] == detections_pa[:, 7]
+
+            case 5:
+
+                # Case 5: calculate the PA by combining YOLO's confidence score, the bbox size, and the Few Shot model confidence score, index: x1, y1, x2, y2, conf, class, PA (continuous), PA (intervals)
+                detections_pa = self.calculate_pa_5_sigmoid(detections, img)
 
                 correct_pa = labels_pa[:, 5:6] == detections_pa[:, 7]
 

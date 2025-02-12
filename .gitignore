@@ -138,6 +138,7 @@ retina-face/results/
 retina-face/widerface_evaluate/box_overlaps.c
 *.patch
 *.bk
+yolo-face/data/
 
 .DS_Store
 
