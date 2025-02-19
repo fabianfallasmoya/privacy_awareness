@@ -354,6 +354,10 @@ class DetectionValidator(BaseValidator):
 
         array_with_pa = torch.cat((array_with_pa, pa_intervals.unsqueeze(1)), dim=1)
 
+        return array_with_pa
+
+    def normalize_pa_labels(self, labels):
+        # Transform PA range from [1,5] to [0,1]
         labels[:, 5] = labels[:, 5] / 5
         return labels
 
