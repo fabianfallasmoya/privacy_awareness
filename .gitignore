@@ -133,12 +133,12 @@ dmypy.json
 runs/
 wandb/
 */data/widerface/val/images/
+*/data/celeba/
 */widerface_evaluate/widerface_txt/
 retina-face/results/
 retina-face/widerface_evaluate/box_overlaps.c
 *.patch
 *.bk
-yolo-face/data/
 
 .DS_Store
 

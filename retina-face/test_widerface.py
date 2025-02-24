@@ -10,8 +10,11 @@ from layers.functions.prior_box import PriorBox
 from utils.nms.py_cpu_nms import py_cpu_nms
 import cv2
 from models.retinaface import RetinaFace
+from models.fewshot import create_model
 from utils.box_utils import decode, decode_landm
 from utils.timer import Timer
+from PIL import Image
+import torchvision.transforms as transforms
 
 
 parser = argparse.ArgumentParser(description='Retinaface')
@@ -172,35 +175,135 @@ def exponentialBoostTransform(x, threshold=0.1, alpha=10):
                     x)
 
 def calculate_pa_expBoost(detections):
-        """
-        Calculate Privacy Awareness using conf score, bbox size and landmarks num
+    """
+    Calculate Privacy Awareness using conf score, bbox size and landmarks num
 
-        Params:
-            detections (x1,y1,x2,y2,cs,lm1x,lm1y,lm2x,lm2y,lm3x,lm3y,lm4x,lm4y,lm5x,lm5y)
-        Returns:
-            array_with_pa (x1,y1,x2,y2,cs,lm1x,lm1y,lm2x,lm2y,lm3x,lm3y,lm4x,lm4y,lm5x,lm5y, pa, pa_discret)
-        """
-        # Convert detections to a PyTorch tensor
-        detections = torch.tensor(detections)
+    Params:
+        detections (x1,y1,x2,y2,cs,lm1x,lm1y,lm2x,lm2y,lm3x,lm3y,lm4x,lm4y,lm5x,lm5y)
+    Returns:
+        array_with_pa (x1,y1,x2,y2,cs,lm1x,lm1y,lm2x,lm2y,lm3x,lm3y,lm4x,lm4y,lm5x,lm5y, pa, pa_discret)
+    """
+    # Convert detections to a PyTorch tensor
+    detections = torch.tensor(detections)
 
-        # first calculate the bbox size
-        area = calculate_bbox_size(detections)
+    # first calculate the bbox size
+    area = calculate_bbox_size(detections)
 
-        # then define sigmoid parameters
-        alpha = 30
-        threshold = 0.0001
+    # then define sigmoid parameters
+    alpha = 30
+    threshold = 0.0001
 
-        # Calculate the PA using the weights formula
-        pa = 0.3 * detections[:, 4] + 0.4 * exponentialBoostTransform(area, threshold=threshold, alpha=alpha) + 0.3 * get_landmark_score(detections)
-        # Add the Privacy Awareness as an extra column
-        array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
+    # Calculate the PA using the weights formula
+    pa = 0.3 * detections[:, 4] + 0.4 * exponentialBoostTransform(area, threshold=threshold, alpha=alpha) + 0.3 * get_landmark_score(detections)
+    # Add the Privacy Awareness as an extra column
+    array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
 
-        # now classify continuous PA value into PA interval i.e. 0.73 -> 0.8
-        pa_intervals = torch.ceil(pa / 0.2) * 0.2
+    # now classify continuous PA value into PA interval i.e. 0.73 -> 0.8
+    pa_intervals = torch.ceil(pa / 0.2) * 0.2
 
-        array_with_pa = torch.cat((array_with_pa, pa_intervals.unsqueeze(1)), dim=1)
+    array_with_pa = torch.cat((array_with_pa, pa_intervals.unsqueeze(1)), dim=1)
 
-        return array_with_pa.numpy()
+    return array_with_pa.numpy()
+
+def crop_image(tensor, detections):
+    """
+    Crop an RGB image from a given pytorch tensor based on a series of coordinates
+    and store the cropped images in a list.
+
+    Args:
+        tensor (pytorch tensor): The input Image tensor.
+        detections (list of detections): A pytorch tensor with the detections info
+
+    Returns:
+        list: A list of cropped images (Pillow Image objects).
+    """
+    tensor = tensor.cpu()
+
+        # Convert tensor to a PIL Image (ensure the tensor is in [H, W, C] format)
+    if tensor.ndimension() == 3 and tensor.shape[0] == 3:  # [C, H, W] format
+        tensor = tensor.permute(1, 2, 0)  # Rearrange to [H, W, C]
+
+    # Convert to a NumPy array and then to a PIL Image
+    image = Image.fromarray((tensor.numpy() * 255).astype('uint8'))
+
+    cropped_images = []
+    for coord in detections:
+        cropped_image = image.crop((int(coord[0]), int(coord[1]), int(coord[2]), int(coord[3])))  # Crop the image
+        cropped_images.append(cropped_image)
+
+    # for idx, cropped_image in enumerate(cropped_images):
+    #     cropped_image.show()  # Opens the image in the default image viewer
+
+    return cropped_images
+
+def get_few_shot_confidence_score(cropped_images, fewshot_model):
+    # init few shot confidence score
+    score = torch.empty(len(cropped_images), dtype=torch.float32)
+
+    # Setup transform to go from PIL image to tensor
+    transform = transforms.ToTensor()
+
+    # get the few shot confidence score for each image
+    for idx, img in enumerate(cropped_images):
+        tensor_image = transform(img)
+        _, H, W = tensor_image.shape  # Unpack shape: (C, H, W)
+        # Check if either dimension is smaller than 7, since the image can't be smaller than the model kernel 7x7
+        if H < 7 or W < 7:
+            score[idx] = -100
+        else:
+            # Convert single image tensor to a batch (batch size = 1)
+            tensor_image = tensor_image.unsqueeze(0)  # Shape changes from [C, H, W] -> [1, C, H, W]
+            few_shot_score = fewshot_model(
+                tensor_image.to("cuda", dtype=torch.float32)
+            ).detach()
+            score[idx] = few_shot_score.data[0]
+
+    # normalize the confidence score
+    score = score.to("cuda")
+    min_val, max_val = -28, -16
+    # Apply min-max normalization
+    normalized = (score - min_val) / (max_val - min_val)
+
+    # Clamp values to the range [0, 1]
+    normalized = torch.clamp(normalized, 0, 1)
+
+    return normalized
+
+def calculate_pa4_expBoost(detections, img, fewshot_model):
+    """
+    Calculate Privacy Awareness using conf score, bbox size, landmarks num and few shot confidence score
+
+    Params:
+        detections (x1,y1,x2,y2,cs,lm1x,lm1y,lm2x,lm2y,lm3x,lm3y,lm4x,lm4y,lm5x,lm5y)
+    Returns:
+        array_with_pa (x1,y1,x2,y2,cs,lm1x,lm1y,lm2x,lm2y,lm3x,lm3y,lm4x,lm4y,lm5x,lm5y, pa, pa_discret)
+    """
+    # Convert detections to a PyTorch tensor
+    detections = torch.tensor(detections)
+
+    # first calculate the bbox size
+    area = calculate_bbox_size(detections)
+
+    # second, create the cropped image vector based on the detections and the batch image
+    # Convert to PyTorch tensor
+    torch_tensor = torch.from_numpy(img)
+    cropped_images = crop_image(torch_tensor, detections)
+
+    # then define sigmoid parameters
+    alpha = 30
+    threshold = 0.0001
+
+    # Calculate the PA using the weights formula
+    pa = 0.3 * detections[:, 4] + 0.3 * exponentialBoostTransform(area, threshold=threshold, alpha=alpha) + 0.4 * get_few_shot_confidence_score(cropped_images, fewshot_model).cpu()
+    # Add the Privacy Awareness as an extra column
+    array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
+
+    # now classify continuous PA value into PA interval i.e. 0.73 -> 0.8
+    pa_intervals = torch.ceil(pa / 0.2) * 0.2
+
+    array_with_pa = torch.cat((array_with_pa, pa_intervals.unsqueeze(1)), dim=1)
+
+    return array_with_pa.numpy()
 
 if __name__ == '__main__':
     torch.set_grad_enabled(False)
@@ -212,6 +315,7 @@ if __name__ == '__main__':
         cfg = cfg_re50
     # net and model
     net = RetinaFace(cfg=cfg, phase = 'test')
+    fewshot_model = create_model()
     net = load_model(net, args.trained_model, args.cpu)
     net.eval()
     print('Finished loading model!')
@@ -308,7 +412,8 @@ if __name__ == '__main__':
 
         # Calculate PA
         # dets_pa = calculate_pa_sigmoid(dets)
-        dets_pa = calculate_pa_expBoost(dets)
+        # dets_pa = calculate_pa_expBoost(dets)
+        dets_pa = calculate_pa4_expBoost(dets, img_raw, fewshot_model)
 
         # --------------------------------------------------------------------
         save_name = args.save_folder + img_name[:-4] + ".txt"
