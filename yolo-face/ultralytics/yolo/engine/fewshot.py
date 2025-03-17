@@ -64,7 +64,7 @@ class PrototypicalNetworks(nn.Module):
         return scores
 
 
-def create_model():
+def create_fewshot_model():
     image_size = 128
 
     transform = transforms.Compose([

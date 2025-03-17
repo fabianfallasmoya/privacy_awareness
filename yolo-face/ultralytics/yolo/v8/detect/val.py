@@ -11,7 +11,8 @@ import torchvision.transforms as transforms
 from ultralytics.yolo.data import build_dataloader
 from ultralytics.yolo.data.dataloaders.v5loader import create_dataloader
 from ultralytics.yolo.engine.validator import BaseValidator
-from ultralytics.yolo.engine.fewshot import create_model
+from ultralytics.yolo.engine.fewshot import create_fewshot_model
+from ultralytics.yolo.engine.depth_estimator import create_depth_estimator
 from ultralytics.yolo.utils import DEFAULT_CFG, colorstr, ops, yaml_load
 from ultralytics.yolo.utils.checks import check_file, check_requirements
 from ultralytics.yolo.utils.metrics import ConfusionMatrix, DetMetrics, box_iou
@@ -30,7 +31,12 @@ class DetectionValidator(BaseValidator):
         self.metrics = DetMetrics(save_dir=self.save_dir)
         self.iouv = torch.linspace(0.5, 0.95, 10)  # iou vector for mAP@0.5:0.95
         self.niou = self.iouv.numel()
-        self.fewshot_model = create_model()
+        match globals.eval_case:
+            case 3:
+                self.depth_estimator_model = create_depth_estimator()
+
+            case 5:
+                self.fewshot_model = create_fewshot_model()
 
 
     def preprocess(self, batch):
@@ -356,6 +362,66 @@ class DetectionValidator(BaseValidator):
 
         return array_with_pa
 
+    def get_depth(self, bboxes, depth_map, central_fraction=0.1):
+        """
+        Computes the average depth of the central pixels of each bounding box.
+
+        Parameters:
+        - bboxes: (N, 4) numpy array with bounding boxes in [x1, y1, x2, y2] format.
+        - depth_map: (H, W) tensor with depth values from 0 (background) to 1 (foreground).
+        - central_fraction: Fraction of the bounding box to consider for depth calculation.
+
+        Returns:
+        - depths: (N,) tensor with the average depth of central pixels of each bounding box.
+        """
+        depths = []
+
+        for x1, y1, x2, y2 in bboxes:
+            # Compute center region size
+            w, h = x2 - x1, y2 - y1
+            cw, ch = int(w * central_fraction), int(h * central_fraction)
+
+            # Compute central region coordinates
+            cx1 = x1 + (w - cw) // 2
+            cy1 = y1 + (h - ch) // 2
+            cx2 = cx1 + cw
+            cy2 = cy1 + ch
+
+            # Ensure within depth_map bounds with integer conversion
+            cx1, cx2 = int(max(0, cx1)), int(min(depth_map.shape[1], cx2))
+            cy1, cy2 = int(max(0, cy1)), int(min(depth_map.shape[0], cy2))
+
+            # Extract depth values and compute the average
+            central_region = depth_map[cy1:cy2, cx1:cx2]
+            central_depth = torch.mean(central_region) if central_region.numel() > 0 else torch.tensor(0.0)
+            depths.append(central_depth)
+
+        return torch.tensor(depths)
+
+    def calculate_pa_3_sigmoid(self, detections, img):
+        # first calculate the bbox size
+        area = self.calculate_bbox_size(detections)
+
+        # then define sigmoid parameters
+        alpha = 40
+        threshold = 0.001
+
+        # get the depth vector (scaled disp)
+        depth_vector = self.depth_estimator_model.forward(img)
+
+        # Calculate the PA using the weights formula
+        pa = 0.3 * detections[:, 4] + 0.3 * self.sigmoid(area, threshold=threshold, alpha=alpha) + 0.4 * self.get_depth(detections[:,0:4], depth_vector)
+
+        # Add the Privacy Awareness as an extra column
+        array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
+
+        # now classify continuous PA value into PA interval i.e. 0.73 -> 0.8
+        pa_intervals = torch.ceil(pa / 0.2) * 0.2
+
+        array_with_pa = torch.cat((array_with_pa, pa_intervals.unsqueeze(1)), dim=1)
+
+        return array_with_pa
+
     def normalize_pa_labels(self, labels):
         # Transform PA range from [1,5] to [0,1]
         labels[:, 5] = labels[:, 5] / 5
@@ -387,6 +453,11 @@ class DetectionValidator(BaseValidator):
                 detections_pa = self.calculate_pa_1_sigmoid(detections)
                 #detections_pa = self.calculate_pa_1_expBoost(detections)
 
+                correct_pa = labels_pa[:, 5:6] == detections_pa[:, 7]
+
+            case 3:
+                # Case 3: calculate the PA by combining YOLO's confidence score, the bbox size, and the Depth Estimator model scaled disp vector, index: x1, y1, x2, y2, conf, class, PA (continuous), PA (intervals)
+                detections_pa = self.calculate_pa_3_sigmoid(detections, img)
                 correct_pa = labels_pa[:, 5:6] == detections_pa[:, 7]
 
             case 5:

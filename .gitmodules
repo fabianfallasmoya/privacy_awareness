@@ -1,0 +1,3 @@
+[submodule "yolo-face/ultralytics/yolo/engine/depth_estimation"]
+	path = yolo-face/ultralytics/yolo/engine/depth_estimation
+	url = https://github.com/nianticlabs/monodepth2.git

@@ -8,7 +8,8 @@ model = YOLO("yolov8n-face.pt")
 # Set the eval case global variable
 # Case 0: plain yolo using only confidence score
 # Case 1: plain yolo using confidence score and bbox size
+# Case 3: yolo + depth estimator
 # Case 5: yolo + few shot model
-globals.eval_case = 5
+globals.eval_case = 3
 
 model.val(data="widerface_pa.yaml")
