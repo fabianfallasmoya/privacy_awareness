@@ -368,7 +368,7 @@ class DetectionValidator(BaseValidator):
 
         Parameters:
         - bboxes: (N, 4) numpy array with bounding boxes in [x1, y1, x2, y2] format.
-        - depth_map: (H, W) tensor with depth values from 0 (background) to 1 (foreground).
+        - depth_map: (H, W) tensor with depth values from 1 (background) to 0 (foreground).
         - central_fraction: Fraction of the bounding box to consider for depth calculation.
 
         Returns:
@@ -394,9 +394,9 @@ class DetectionValidator(BaseValidator):
             # Extract depth values and compute the average
             central_region = depth_map[cy1:cy2, cx1:cx2]
             central_depth = torch.mean(central_region) if central_region.numel() > 0 else torch.tensor(0.0)
-            depths.append(central_depth)
+            depths.append(1-central_depth)
 
-        return torch.tensor(depths)
+        return torch.tensor(depths).to("cuda")
 
     def calculate_pa_3_sigmoid(self, detections, img):
         # first calculate the bbox size
@@ -410,7 +410,7 @@ class DetectionValidator(BaseValidator):
         depth_vector = self.depth_estimator_model.forward(img)
 
         # Calculate the PA using the weights formula
-        pa = 0.3 * detections[:, 4] + 0.3 * self.sigmoid(area, threshold=threshold, alpha=alpha) + 0.4 * self.get_depth(detections[:,0:4], depth_vector)
+        pa = 0.3 * detections[:, 4] + 0.3 * self.sigmoid(area, threshold=threshold, alpha=alpha) + 0.4 * self.get_depth(detections[:,0:4], depth_vector[0][0])
 
         # Add the Privacy Awareness as an extra column
         array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)

@@ -22,6 +22,11 @@ from .depth_estimation.layers import disp_to_depth
 from .depth_estimation.utils import download_model_if_doesnt_exist
 from .depth_estimation.evaluate_depth import STEREO_SCALE_FACTOR
 
+def normalize_tensor(tensor):
+    min_val = torch.min(tensor)
+    max_val = torch.max(tensor)
+    return (tensor - min_val) / (max_val - min_val) if max_val > min_val else torch.zeros_like(tensor)
+
 
 def create_depth_estimator():
     model = DepthEstimator()
@@ -82,6 +87,7 @@ class DepthEstimator():
             to_pil = transforms.ToPILImage()
             input_image = to_pil(img)
             input_image.convert('RGB')
+            #display_img = input_image
             original_width, original_height = input_image.size
             input_image = input_image.resize((self.feed_width, self.feed_height), pil.LANCZOS)
             input_image = transforms.ToTensor()(input_image).unsqueeze(0)
@@ -96,21 +102,20 @@ class DepthEstimator():
                 disp, (original_height, original_width), mode="bilinear", align_corners=False)
 
             # Returning numpy vector
-            scaled_disp, depth = disp_to_depth(disp, 0.1, 100)
-            metric_depth = STEREO_SCALE_FACTOR * depth.cpu().numpy()
+            #scaled_disp, depth = disp_to_depth(disp, 0.1, 100)
+            #metric_depth = STEREO_SCALE_FACTOR * depth.cpu().numpy()
 
-            # Cap at 1
-            scaled_disp = np.clip(scaled_disp, None, 1)
+            # Normalize
+            disp_resized_norm = normalize_tensor(disp_resized)
 
-            return scaled_disp
-
-            # Saving colormapped depth image
+            # Display colormapped depth image
             # disp_resized_np = disp_resized.squeeze().cpu().numpy()
             # vmax = np.percentile(disp_resized_np, 95)
             # normalizer = mpl.colors.Normalize(vmin=disp_resized_np.min(), vmax=vmax)
             # mapper = cm.ScalarMappable(norm=normalizer, cmap='magma')
             # colormapped_im = (mapper.to_rgba(disp_resized_np)[:, :, :3] * 255).astype(np.uint8)
             # im = pil.fromarray(colormapped_im)
+            # display_img.show()
+            # im.show()
 
-            # name_dest_im = os.path.join(output_directory, "{}_disp.jpeg".format(output_name))
-            # im.save(name_dest_im)
+            return disp_resized_norm
