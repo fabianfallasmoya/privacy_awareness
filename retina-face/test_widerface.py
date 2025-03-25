@@ -205,26 +205,22 @@ def calculate_pa_expBoost(detections):
 
     return array_with_pa.numpy()
 
-def crop_image(tensor, detections):
+def crop_image(np_image, detections):
     """
     Crop an RGB image from a given pytorch tensor based on a series of coordinates
     and store the cropped images in a list.
 
     Args:
-        tensor (pytorch tensor): The input Image tensor.
+        np_image (numpy image): The input image.
         detections (list of detections): A pytorch tensor with the detections info
 
     Returns:
         list: A list of cropped images (Pillow Image objects).
     """
-    tensor = tensor.cpu()
-
-        # Convert tensor to a PIL Image (ensure the tensor is in [H, W, C] format)
-    if tensor.ndimension() == 3 and tensor.shape[0] == 3:  # [C, H, W] format
-        tensor = tensor.permute(1, 2, 0)  # Rearrange to [H, W, C]
-
-    # Convert to a NumPy array and then to a PIL Image
-    image = Image.fromarray((tensor.numpy() * 255).astype('uint8'))
+    # Convert from BGR to RGB
+    np_image = cv2.cvtColor(np_image, cv2.COLOR_BGR2RGB)  # Convert to RGB
+    # Convert NumPy array to PIL Image
+    image = Image.fromarray(np_image)
 
     cropped_images = []
     for coord in detections:
@@ -249,7 +245,7 @@ def get_few_shot_confidence_score(cropped_images, fewshot_model):
         _, H, W = tensor_image.shape  # Unpack shape: (C, H, W)
         # Check if either dimension is smaller than 7, since the image can't be smaller than the model kernel 7x7
         if H < 7 or W < 7:
-            score[idx] = -100
+            score[idx] = -28
         else:
             # Convert single image tensor to a batch (batch size = 1)
             tensor_image = tensor_image.unsqueeze(0)  # Shape changes from [C, H, W] -> [1, C, H, W]
@@ -285,9 +281,7 @@ def calculate_pa4_expBoost(detections, img, fewshot_model):
     area = calculate_bbox_size(detections)
 
     # second, create the cropped image vector based on the detections and the batch image
-    # Convert to PyTorch tensor
-    torch_tensor = torch.from_numpy(img)
-    cropped_images = crop_image(torch_tensor, detections)
+    cropped_images = crop_image(img, detections)
 
     # then define sigmoid parameters
     alpha = 30
@@ -411,8 +405,12 @@ if __name__ == '__main__':
         _t['misc'].toc()
 
         # Calculate PA
+
+        # CASE 2
         # dets_pa = calculate_pa_sigmoid(dets)
         # dets_pa = calculate_pa_expBoost(dets)
+
+        # CASE 4
         dets_pa = calculate_pa4_expBoost(dets, img_raw, fewshot_model)
 
         # --------------------------------------------------------------------
