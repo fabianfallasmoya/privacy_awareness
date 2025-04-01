@@ -198,7 +198,7 @@ class DetectionValidator(BaseValidator):
         threshold = 0.001
 
         # Calculate the PA using the weights formula
-        pa = 0.5 * detections[:, 4] + 0.5 * self.sigmoid(area, threshold=threshold, alpha=alpha)
+        pa = 0.7 * detections[:, 4] + 0.3 * self.sigmoid(area, threshold=threshold, alpha=alpha)
         # Add the Privacy Awareness as an extra column
         array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
 
@@ -232,7 +232,7 @@ class DetectionValidator(BaseValidator):
         threshold = 0.00005
 
         # Calculate the PA using the weights formula
-        pa = 0.75 * detections[:, 4] + 0.25 * self.exponentialBoostTransform(area, threshold=threshold, alpha=alpha)
+        pa = 0.65 * detections[:, 4] + 0.35 * self.exponentialBoostTransform(area, threshold=threshold, alpha=alpha)
         # Add the Privacy Awareness as an extra column
         array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
 
@@ -318,7 +318,7 @@ class DetectionValidator(BaseValidator):
             _, H, W = tensor_image.shape  # Unpack shape: (C, H, W)
             # Check if either dimension is smaller than 7, since the image can't be smaller than the model kernel 7x7
             if H < 7 or W < 7:
-                score[idx] = -100
+                score[idx] = -28
             else:
                 # Convert single image tensor to a batch (batch size = 1)
                 tensor_image = tensor_image.unsqueeze(0)  # Shape changes from [C, H, W] -> [1, C, H, W]
@@ -351,7 +351,7 @@ class DetectionValidator(BaseValidator):
         threshold = 0.001
 
         # Calculate the PA using the weights formula
-        pa = 0.3 * detections[:, 4] + 0.3 * self.sigmoid(area, threshold=threshold, alpha=alpha) + 0.4 * self.get_few_shot_confidence_score(cropped_images)
+        pa = 0.9 * (0.7 * detections[:, 4] + 0.3 * self.sigmoid(area, threshold=threshold, alpha=alpha)) + 0.1 * self.get_few_shot_confidence_score(cropped_images)
         # Add the Privacy Awareness as an extra column
         array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
 
@@ -410,7 +410,8 @@ class DetectionValidator(BaseValidator):
         depth_vector = self.depth_estimator_model.forward(img)
 
         # Calculate the PA using the weights formula
-        pa = 0.3 * detections[:, 4] + 0.3 * self.sigmoid(area, threshold=threshold, alpha=alpha) + 0.4 * self.get_depth(detections[:,0:4], depth_vector[0][0])
+        #pa = 0.9 * (0.7 * detections[:, 4] + 0.3 * self.sigmoid(area, threshold=threshold, alpha=alpha)) + 0.1 * self.get_depth(detections[:,0:4], depth_vector[0][0])
+        pa = 0.9 * (0.7 * detections[:, 4] + 0.3 * self.sigmoid(area, threshold=threshold, alpha=alpha)) + 0.1 * self.sigmoid(self.get_depth(detections[:,0:4], depth_vector[0][0]),threshold=0.1, alpha=10)
 
         # Add the Privacy Awareness as an extra column
         array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
@@ -433,6 +434,7 @@ class DetectionValidator(BaseValidator):
         Arguments:
             detections (array[N, 6]), x1, y1, x2, y2, conf, class
             labels (array[M, 6]), class, x1, y1, x2, y2, PA
+            img pytorch tensor image
         Returns:
             correct_pa (array[N, 10]), for 10 IoU levels
         """

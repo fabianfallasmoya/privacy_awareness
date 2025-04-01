@@ -150,7 +150,7 @@ def calculate_pa_sigmoid(detections):
     threshold = 0.1
 
     # Calculate the PA using the weights formula
-    pa = 0.3 * detections[:, 4] + 0.4 * sigmoid(area, threshold=threshold, alpha=alpha) + 0.3 * get_landmark_score(detections)
+    pa = 0.7 * (0.65 * detections[:, 4] + 0.35 * sigmoid(area, threshold=threshold, alpha=alpha)) + 0.3 * get_landmark_score(detections)
     # Add the Privacy Awareness as an extra column
     array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
 
@@ -194,7 +194,7 @@ def calculate_pa_expBoost(detections):
     threshold = 0.0001
 
     # Calculate the PA using the weights formula
-    pa = 0.3 * detections[:, 4] + 0.4 * exponentialBoostTransform(area, threshold=threshold, alpha=alpha) + 0.3 * get_landmark_score(detections)
+    pa = 0.7 * (0.45 * detections[:, 4] + 0.55 * exponentialBoostTransform(area, threshold=threshold, alpha=alpha)) + 0.3 * get_landmark_score(detections)
     # Add the Privacy Awareness as an extra column
     array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
 
@@ -265,7 +265,7 @@ def get_few_shot_confidence_score(cropped_images, fewshot_model):
 
     return normalized
 
-def calculate_pa4_expBoost(detections, img, fewshot_model):
+def calculate_pa4_sigmoid(detections, img, fewshot_model):
     """
     Calculate Privacy Awareness using conf score, bbox size, landmarks num and few shot confidence score
 
@@ -284,11 +284,12 @@ def calculate_pa4_expBoost(detections, img, fewshot_model):
     cropped_images = crop_image(img, detections)
 
     # then define sigmoid parameters
-    alpha = 30
-    threshold = 0.0001
+    alpha = 25
+    threshold = 0.1
 
     # Calculate the PA using the weights formula
-    pa = 0.3 * detections[:, 4] + 0.3 * exponentialBoostTransform(area, threshold=threshold, alpha=alpha) + 0.4 * get_few_shot_confidence_score(cropped_images, fewshot_model).cpu()
+    pa = 0.9 * (0.7 * (0.65 * detections[:, 4] + 0.35 * sigmoid(area, threshold=threshold, alpha=alpha)) + 0.3 * get_landmark_score(detections)) + 0.1 * get_few_shot_confidence_score(cropped_images, fewshot_model).cpu()
+    # pa = 0.3 * detections[:, 4] + 0.3 * sigmoid(area, threshold=threshold, alpha=alpha) + 0.4 * get_few_shot_confidence_score(cropped_images, fewshot_model).cpu()
     # Add the Privacy Awareness as an extra column
     array_with_pa = torch.cat((detections, pa.unsqueeze(1)), dim=1)
 
@@ -411,7 +412,7 @@ if __name__ == '__main__':
         # dets_pa = calculate_pa_expBoost(dets)
 
         # CASE 4
-        dets_pa = calculate_pa4_expBoost(dets, img_raw, fewshot_model)
+        dets_pa = calculate_pa4_sigmoid(dets, img_raw, fewshot_model)
 
         # --------------------------------------------------------------------
         save_name = args.save_folder + img_name[:-4] + ".txt"
