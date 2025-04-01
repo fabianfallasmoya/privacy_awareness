@@ -1,5 +1,5 @@
 # Data Preparation
-In this markdown document we go through the steps of preparing our custom dataset for both yolo-face and for retina-face models. We're taking the [WIDERFACE](http://shuoyang1213.me/WIDERFACE/) validation dataset as the baseline (no train/test, only val). The general idea is to create a reduced WIDERFACE dataset (around 200 images) that contains custom Privacy Awareness annotations for validation purposes.
+In this markdown document we go through the steps of preparing our custom dataset for both yolo-face and for retina-face models. We're taking the [WIDERFACE](http://shuoyang1213.me/WIDERFACE/) validation dataset as the baseline (no train/test, only val). The general idea is to create a reduced WIDERFACE dataset (around 200 images) that contains custom Privacy Awareness annotations for validation purposes. We then mention how to setup the dataset for the Few Shot model (Prototypical Networks). In this case, the [CelebA](https://mmlab.ie.cuhk.edu.hk/projects/CelebA.html) dataset was chosen as support set, due to its face focused nature, which is very useful to evaluate the face-detector model predictions. 
 
 ## Yolo-Face
 For this model we created the following workflow (you can skip 1 to 3 and download the dataset from this [link](https://app.roboflow.com/objectdetection-iyfmq/widerface-pa/1)):
@@ -118,4 +118,34 @@ sudo apt-get install fzf
 ./copy_labels_retina.sh ../retina-face/data/widerface/val/wider_val.txt ../../datasets/customPA/WIDERFACE_PA_yolov8/valid/labels/
 
 mv wider_face_val_bbx_gt.txt ../retina-face/data/widerface/val/
+```
+
+## Few-Shot (Prototypical Networks)
+The idea behind using a few shot model is to have a quick image classification, based on a "support set" that isn't part of the training or testing sets. Specifically we aim at a one-class classification to get a confidence score for each prediction of the face-detector model. In this case, the [CelebA](https://mmlab.ie.cuhk.edu.hk/projects/CelebA.html) dataset was chosen as support set, due to its face focused nature. One of the main advantages about CelebA is that it's part of the pytorch framework datasets which has well-written [documentation](https://pytorch.org/vision/stable/generated/torchvision.datasets.CelebA.html?ref=hackernoon.com#torchvision.datasets.CelebA) and it's easy to import in the code. Setup steps are:
+
+1. Create a ```data/celeba/``` directory in the directory of each base-model. Go to the root of the repo and run:
+```
+mkdir -p yolo-face/data/celeba/
+mkdir -p retina-face/data/celeba/
+```
+
+2. Although the pytorch dataset library supports automatic download, the safer way is downloading manually from this [link](https://drive.google.com/drive/folders/0B7EVK8r0v71pWEZsZE9oNnFzTm8?resourcekey=0-5BR16BdXnb8hVj6CNHKzLg). Download it and unzip it.
+
+3. Organize the contents in the directories of step 1, in the following way:
+```
+data/
+└── celeba
+    ├── identity_CelebA.txt
+    ├── img_align_celeba
+    │   ├── 000001.jpg
+    │   ├── 000002.jpg
+    │   ├── 000003.jpg
+    │   ├── ...
+    │   ├── 202598.jpg
+    │   └── 202599.jpg
+    ├── list_attr_celeba.txt
+    ├── list_bbox_celeba.txt
+    ├── list_eval_partition.txt
+    ├── list_landmarks_align_celeba.txt
+    └── list_landmarks_celeba.txt
 ```
