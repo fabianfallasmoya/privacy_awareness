@@ -133,6 +133,7 @@ dmypy.json
 runs/
 wandb/
 */data/widerface/val/images/
+*/data/widerface/val_bk/images/
 */data/celeba/
 */widerface_evaluate/widerface_txt/
 retina-face/results/

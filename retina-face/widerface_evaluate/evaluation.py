@@ -404,6 +404,8 @@ def evaluation2(pred, gt_path, img_path, iou_thresh=0.5):
 
     print("==================== Results ====================")
     print("Val AP: {}".format(aps[0]))
+    print("Precision: {}".format(propose[-1]))
+    print("Recall: {}".format(recall[-1]))
     print("=================================================")
 
 
@@ -415,7 +417,7 @@ if __name__ == '__main__':
     parser.add_argument('-i', '--img_path', default='../data/widerface/val/images/')
 
     args = parser.parse_args()
-    evaluation2(args.pred, args.gt, args.img_path)
+    evaluation2(args.pred, args.gt, args.pred)
 
 
 

@@ -10,6 +10,6 @@ model = YOLO("yolov8n-face.pt")
 # Case 1: plain yolo using confidence score and bbox size
 # Case 3: yolo + depth estimator
 # Case 5: yolo + few shot model
-globals.eval_case = 3
+globals.eval_case = 0
 
 model.val(data="widerface_pa.yaml")
