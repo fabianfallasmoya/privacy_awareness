@@ -79,7 +79,7 @@ filter_and_delete() {
     local count=1
 
     # Sort files naturally
-    mapfile -t files < <(find "$dir_path" -maxdepth 1 -type f -iname "*.$extension" | sort)
+    mapfile -t files < <(find "$dir_path" -maxdepth 1 -type f -iname "*.$extension" | sort -V)
 
     for file in "${files[@]}"; do
         if [[ -z "${combo_map[$count]}" ]]; then

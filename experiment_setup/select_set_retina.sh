@@ -59,6 +59,10 @@ numbers=("${numbers[@]:1}")
 # --- Build a list for awk ---
 number_list=$(IFS=,; echo "${numbers[*]}")
 
+# Sort File A in natural numeric order before filtering
+sorted_a="sorted_file_a.tmp"
+sort -V "$file_a" > "$sorted_a"
+
 # --- Filter File A ---
 awk -v list="$number_list" '
     BEGIN {
@@ -68,7 +72,7 @@ awk -v list="$number_list" '
     {
         if (line_map[FNR]) print
     }
-' "$file_a" > "$temp_a"
+' "$sorted_a" > "$temp_a"
 
 if [[ ! -s "$temp_a" ]]; then
     echo "Warning: Filtered file A is empty. Aborting."
@@ -107,6 +111,6 @@ awk '
 # Finalize
 mv "$temp_a" "$file_a"
 mv "$temp_b" "$file_b"
-rm -f __headers.tmp __keep_headers.tmp
+rm -f __headers.tmp __keep_headers.tmp "$sorted_a"
 
 echo "Done. Filtered $file_a and $file_b based on set #$row_number"
