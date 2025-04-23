@@ -36,7 +36,7 @@ cp -r retina-face/data/widerface/val retina-face/data/widerface/val_bk
 ```
 
 ## Install selected test set in YOLO and RetinaFace
-In this section we use a couple of scripts to actually setup the datasets according to the generated test set list. For example, for a test set of 100 images, the rest (175 images) must be discarded from the complete dataset in order to run the evaluation on the reduced set.
+In this section we use a couple of scripts to manually setup the datasets according to one of the generated test sets in the list. For example, for a test-set size of 100 images, the rest (175 images) must be discarded from the complete dataset in order to run the evaluation on the reduced set. NOTE: Skip this section if you're looking to run all the test sets in the list automatically.
 
 ### YOLO
 For the case of YOLO just run:
@@ -74,3 +74,19 @@ cd ..
 
 rm -r widerface_evaluate/widerface_txt/* ; python3 test_widerface.py --trained_model Resnet50_Final.pth --network resnet50 -s ; cd widerface_evaluate ; python3 evaluation.py ; cd ..
 ```
+
+## Automated benchmarking
+
+In this section, we run a script that automatically applies the previous scripts to test all of the test sets in the txt file. One for YOLO and one for Retina Face:
+
+```
+# YOLO
+cd yolo-face/
+../experiment_setup/run_sets_yolo.sh
+
+# Retina Face
+cd retina-face/
+../experiment_setup/run_sets_retina.sh
+```
+
+NOTE: For each model, set the case number in the code before running these scripts (i.e. Case 3 is YOLO + Depth Estimator or Case 4 is Retina Face + Fewshot).
